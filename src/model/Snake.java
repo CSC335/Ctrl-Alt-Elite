@@ -1,90 +1,94 @@
 package model;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Snake {
-    public static class Direction {
-        public static final int UP = 0;
-        public static final int DOWN = 1;
-        public static final int LEFT = 2;
-        public static final int RIGHT = 3;
-
-        private Direction() {}
-
-        public static int getX(int direction) {
-            if (direction == LEFT) {
-                return -1;
-            } else if (direction == RIGHT) {
-                return 1;
-            }
-            return 0;
-        }
-
-        public static int getY(int direction) {
-            if (direction == UP) {
-                return -1;
-            } else if (direction == DOWN) {
-                return 1;
-            }
-            return 0;
-        }
-    }
-
-    private List<Point> body;
+    private final List<Point> body;
+    private Direction direction;
+    private int x;
+    private int y;
     private Color color;
-    private int direction;
 
-    public Snake(int initialLength, Color color) {
-        this.body = new ArrayList<>();
+
+    public Snake() {
+        body = new ArrayList<>();
+        body.add(new Point(10, 10));
+        direction = Direction.RIGHT;
+    }
+    public Snake(int x, int y, Color color) {
+        this.body = null;
+		this.x = x;
+        this.y = y;
         this.color = color;
-        this.direction = Direction.RIGHT; 
-
-  
-        for (int i = 0; i < initialLength; i++) {
-            body.add(new Point(i, 0));
+    }
+    public Point getHead() {
+        return body.getFirst();
+    }
+    public void draw(GraphicsContext gc) {
+        gc.setFill(color); // Set the fill color for the snake
+        for (Point point : body) {
+            gc.fillRect(point.getX(), point.getY(), 1, 1); // Draw each body segment of the snake
         }
     }
 
-    public void move() {
-        
-        Point head = body.get(0);
-        Point newHead = new Point(head.getX() + Direction.getX(direction), head.getY() + Direction.getY(direction));
-        body.add(0, newHead); 
-        body.remove(body.size() - 1); 
-    }
 
-    public void grow() {
 
-        Point tail = body.get(body.size() - 1);
-        Point newTail = new Point(tail.getX(), tail.getY());
-        body.add(newTail); 
-    }
 
 
     public List<Point> getBody() {
         return body;
     }
 
-    public void setBody(List<Point> body) {
-        this.body = body;
+    public void move() {
+    
+        Point head = body.get(0);
+        Point newHead = new Point(head.getX() + direction.getX(), head.getY() + direction.getY());
+        body.add(0, newHead); 
+        body.remove(body.size() - 1);
     }
 
-    public Color getColor() {
-        return color;
+    public void grow() {
+      
+        Point head = body.get(0);
+        Point newHead = new Point(head.getX() + direction.getX(), head.getY() + direction.getY());
+        body.add(0, newHead);
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
+    public void setDirection(Direction direction) {
+      
+        if (this.direction == Direction.UP && direction == Direction.DOWN ||
+                this.direction == Direction.DOWN && direction == Direction.UP ||
+                this.direction == Direction.LEFT && direction == Direction.RIGHT ||
+                this.direction == Direction.RIGHT && direction == Direction.LEFT) {
+            return;
+        }
         this.direction = direction;
+    }
+
+    public enum Direction {
+        UP(0, -1),
+        DOWN(0, 1),
+        LEFT(-1, 0),
+        RIGHT(1, 0);
+
+        private final int x;
+        private final int y;
+
+        Direction(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
     }
 }

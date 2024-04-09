@@ -1,6 +1,7 @@
 package model;
 
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -72,5 +73,10 @@ public class GameOverHandler extends VBox {
         restart.setAlignment(Pos.CENTER);
         quit.setAlignment(Pos.CENTER);
     }
-    
+//    public void show() {
+//        Scene scene = new Scene(this, 400, 300);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
+
 }
