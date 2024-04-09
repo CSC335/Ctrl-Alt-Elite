@@ -1,7 +1,9 @@
 package model;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class Snake {
     public void move() {
         
         Point head = body.get(0);
-        Point newHead = new Point(head.getX() + Direction.getX(direction), head.getY() + Direction.getY(direction));
+        Point newHead = new Point();
         body.add(0, newHead); 
         body.remove(body.size() - 1); 
     }
@@ -87,4 +89,14 @@ public class Snake {
     public void setDirection(int direction) {
         this.direction = direction;
     }
+
+	public void updatePosition() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void render(GraphicsContext gc) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -50,4 +50,9 @@ public class FoodPellet {
 		return y;
 	}
 
+	public void checkIfEaten(Snake snake) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
