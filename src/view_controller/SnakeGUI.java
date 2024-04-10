@@ -153,3 +153,8 @@ public class SnakeGUI extends Application {
 //      stage.setScene(scene);
 //      stage.show();
 //  }
+<<<<<<< HEAD
+=======
+
+  
+>>>>>>> 152652fb19e40a67e97ba2c701e7415d207be103
