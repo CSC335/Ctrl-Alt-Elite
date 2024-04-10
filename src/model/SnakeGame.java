@@ -17,8 +17,8 @@ public class SnakeGame {
 
     public SnakeGame(int width, int height, GraphicsContext gc) throws Exception {
         this.gc = gc;
-        this.board = new Board(width, height, Color.BLACK, gc);
         this.snake = new Snake(width / 2, height / 2, Color.GREEN);
+        this.board = new Board(width, height, Color.BLACK, gc, snake);
         this.scoreManager = new ScoreManager();
         this.gameOverHandler = new GameOverHandler(scoreManager);
 
@@ -52,7 +52,7 @@ public class SnakeGame {
 
     private void update() {
         snake.move();
-        if (board.isCollision(snake)) {
+        if (board.isCollision()) {
             gameOver();
         } else {
             checkFoodCollision();
@@ -62,9 +62,8 @@ public class SnakeGame {
     private void checkFoodCollision() {
         for (FoodPellet pellet : board.getFoodPellets()) {
             if (pellet.detectCollision(snake.getHead())) {
-                pellet.despawn();
+    			pellet.respawn(board.getWidth(), board.getHeight());
                 scoreManager.updateScore(1);
-                board.spawnFoodPellet();
                 snake.grow();
             }
         }
@@ -81,7 +80,6 @@ public class SnakeGame {
 
     private void render() {
         board.update();
-        snake.draw(gc);
     }
 
     @SuppressWarnings("incomplete-switch")

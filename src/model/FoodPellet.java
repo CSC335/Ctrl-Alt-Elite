@@ -1,58 +1,64 @@
 package model;
+
 import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
 public class FoodPellet {
 	private int SIZE = 2; // width & height of pellet - circle shape
 	private Color color;
-	private double x;
-	private double y;
+	private int x;
+	private int y;
 	private boolean isEaten = false;
 	private GraphicsContext gc;
-	public FoodPellet(Color color, int boardWidth, int boardHeight, GraphicsContext gc) {
-		this.color = color;
+	private Color[] pelletColors = { Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PINK,
+			Color.PURPLE };
+
+	public FoodPellet(int boardWidth, int boardHeight, GraphicsContext gc) {
 		this.gc = gc;
 		spawn(boardWidth, boardHeight);
 	}
+
 	public void spawn(int boardWidth, int boardHeight) {
 		Random random = new Random();
-		x = random.nextDouble(boardWidth);
-		y = random.nextDouble(boardHeight);
+		int index = random.nextInt(6);
+		Color color = pelletColors[index];
+		this.color = color;
+
+		random = new Random();
+		x = random.nextInt(boardWidth);
+		y = random.nextInt(boardHeight);
 		draw();
 	}
-	
+
 	public void draw() {
 		gc.setStroke(color);
 		gc.fillOval(x, y, SIZE, SIZE);
 	}
-	// assuming board background color is white for now
-	public void despawn() {
-		gc.setFill(Color.WHITE);
-		gc.fillOval(x, y, SIZE, SIZE);
-		isEaten = true;
+
+	public void respawn(int boardWidth, int boardHeight) {
+		spawn(boardWidth, boardHeight);
+		isEaten = false;
 	}
-	// uses the coordinates of the snakes head to determine if
-	// pellet is eaten
-	public boolean detectCollision() {
-		// if collision: isEaten = true, return true
-		// else: return false
+
+	// detect collision with snakes head
+	public boolean detectCollision(Point head) {
+		if (head.getX() == getX() && head.getY() == getY()) {
+			isEaten = true;
+			return true;
+		}
 		return false;
 	}
-	
+
 	public boolean isEaten() {
 		return isEaten;
 	}
+
 	public double getX() {
 		return x;
 	}
+
 	public double getY() {
 		return y;
 	}
 }
-
-
-
-
-
-
-

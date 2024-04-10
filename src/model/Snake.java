@@ -3,7 +3,6 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class Snake {
         this.color = color;
     }
     public Point getHead() {
-        return body.getFirst();
+        return body.get(0);
     }
     public void draw(GraphicsContext gc) {
         gc.setFill(color); // Set the fill color for the snake
@@ -35,19 +34,6 @@ public class Snake {
             gc.fillRect(point.getX(), point.getY(), 1, 1); // Draw each body segment of the snake
         }
     }
-
-<<<<<<< HEAD
-=======
-    public void move() {
-        
-        Point head = body.get(0);
-        Point newHead = new Point();
-        body.add(0, newHead); 
-        body.remove(body.size() - 1); 
-    }
->>>>>>> c29d9c7508c88cecd9361c7a41c3a9600bb37ebc
-
-
 
 
     public List<Point> getBody() {
@@ -63,7 +49,6 @@ public class Snake {
     }
 
     public void grow() {
-      
         Point head = body.get(0);
         Point newHead = new Point(head.getX() + direction.getX(), head.getY() + direction.getY());
         body.add(0, newHead);
@@ -80,7 +65,7 @@ public class Snake {
         this.direction = direction;
     }
 
-<<<<<<< HEAD
+
     public enum Direction {
         UP(0, -1),
         DOWN(0, 1),
@@ -103,7 +88,7 @@ public class Snake {
             return y;
         }
     }
-=======
+
 	public void updatePosition() {
 		// TODO Auto-generated method stub
 		
@@ -113,5 +98,4 @@ public class Snake {
 		// TODO Auto-generated method stub
 		
 	}
->>>>>>> c29d9c7508c88cecd9361c7a41c3a9600bb37ebc
 }
