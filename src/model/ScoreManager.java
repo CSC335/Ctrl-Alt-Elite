@@ -16,4 +16,12 @@ public class ScoreManager implements java.io.Serializable {
     
     }
     
+    public int getCurrentScore() {
+        return currentScore;
+    }
+    
+    public int getHighScore() {
+        return highScore;
+    }
+    
 }
