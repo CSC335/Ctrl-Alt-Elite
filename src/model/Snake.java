@@ -20,10 +20,12 @@ public class Snake {
         direction = Direction.RIGHT;
     }
     public Snake(int x, int y, Color color) {
-        this.body = null;
+        this.body = new ArrayList<>();
+        body.add(new Point(x, y));
 		this.x = x;
         this.y = y;
         this.color = color;
+        direction = Direction.RIGHT;
     }
     public Point getHead() {
         return body.get(0);
@@ -31,7 +33,7 @@ public class Snake {
     public void draw(GraphicsContext gc) {
         gc.setFill(color); // Set the fill color for the snake
         for (Point point : body) {
-            gc.fillRect(point.getX(), point.getY(), 1, 1); // Draw each body segment of the snake
+            gc.fillRect(point.getX(), point.getY(), 10, 10); // Draw each body segment of the snake
         }
     }
 

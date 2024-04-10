@@ -18,7 +18,10 @@ public class Board {
 		this.height = height;
 		this.backgroundColor = backgroundColor;
 		this.snake = snake;
-		foodPellets = new ArrayList<FoodPellet>();
+
+
+		foodPellets = new ArrayList<>();
+
 		initialize();
 	}
 
