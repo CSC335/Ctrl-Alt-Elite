@@ -70,11 +70,24 @@ public class Board {
 		return false;
 	}
 
-	public void checkCollisions() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
