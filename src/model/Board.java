@@ -20,12 +20,17 @@ public class Board {
 		this.width = width;
 		this.height = height;
 		this.backgroundColor = backgroundColor;
-
+		initialize();
 	}
 
 	public void initialize() {
 		gc.setFill(backgroundColor);
 		gc.fillRect(0, 0, width, height);
+		
+		// spawn 100 random food pellets - adjust number if not enough/too much
+		for (int i = 0; i<100; i++) {
+			spawnFoodPellet();
+		}
 	}
 
 	public void spawnFoodPellet() {
@@ -38,11 +43,18 @@ public class Board {
 
 	// updates the board with current positions of snake and food pellets
 	public void update() {
-		initialize();
-
+		gc.setFill(backgroundColor);
+		gc.fillRect(0, 0, width, height);
+		
 		for (FoodPellet pellet : foodPellets) {
-			pellet.draw();
+			pellet.detectCollision();
+			if (pellet.isEaten())
+				foodPellets.remove(pellet);
+			else
+				pellet.draw();
 		}
+		
+		// snake.draw();
 	}
 
 	public int getWidth() {
@@ -53,13 +65,29 @@ public class Board {
 		return height;
 	}
 	
+	// determine if snake has collided with walls
 	public boolean isCollision() {
 		return false;
 	}
 
-	public void checkCollisions() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
