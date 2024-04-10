@@ -24,6 +24,8 @@ public class SnakeGame {
 
         setupGameLoop();
     }
+    
+
 
     private void setupGameLoop() {
         gameLoop = new AnimationTimer() {

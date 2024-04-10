@@ -15,7 +15,7 @@ import model.Board;
 import model.Snake;
 import model.FoodPellet;
 import model.Snake.Direction;
-
+import model.SnakeGame;
 import javafx.geometry.Point2D;
 
 public class SnakeGUI extends Application {
@@ -29,175 +29,34 @@ public class SnakeGUI extends Application {
     private Board board;
     private AnimationTimer gameLoop;
 
+    
+    private SnakeGame snakeGame;
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         StackPane root = new StackPane();
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
 
-        board = new Board();
-        board.initialize();
+        snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, gc);
 
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-        
-        scene.setOnKeyPressed(event -> {
-            Snake snake = board.getSnake();
-            switch (event.getCode()) {
-                case UP:
-                    snake.setDirection(Direction.UP);
-                    break;
-                case DOWN:
-                    snake.setDirection(Direction.DOWN);
-                    break;
-                case LEFT:
-                    snake.setDirection(Direction.LEFT);
-                    break;
-                case RIGHT:
-                    snake.setDirection(Direction.RIGHT);
-                    break;
-            }
-        });
+
+        scene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
 
         primaryStage.setTitle("Snake Game");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        gameLoop = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                board.update();
-                gc.setFill(board.getBackgroundColor());
-                gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                board.getSnake().render(gc);
-                for (FoodPellet pellet : board.getFoodPellets()) {
-                    pellet.draw();
-                }
-            }
-        };
-        gameLoop.start();
+        snakeGame.start(); // Start the game
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-    public class Snake {
-        private List<Point2D> body;
-        private Color color;
-        private int direction;
-        private final int SIZE = 20;
-
-        // Existing constructor and other methods
-
-        public void move() {
-            if (body.isEmpty()) {
-                return;
-            }
-
-            Point2D head = body.get(0);
-            Point2D newHead = head.add(Direction.getX(direction) * SIZE, Direction.getY(direction) * SIZE);
-
-            // Move the body
-            for (int i = body.size() - 1; i > 0; i--) {
-                body.set(i, body.get(i - 1));
-            }
-            body.set(0, newHead);
-        }
-
-        public void grow() {
-            Point2D tail = body.get(body.size() - 1);
-            Point2D newTail = tail.add(Direction.getX(direction) * SIZE, Direction.getY(direction) * SIZE);
-            body.add(newTail); // Add new segment to the body
-        }
-
-
-        public void updatePosition() {
-            // ??
-        }
-
-        public void render(GraphicsContext gc) {
-            gc.setFill(color);
-            for (Point2D segment : body) {
-                gc.fillRect(segment.getX(), segment.getY(), SIZE, SIZE);
-            }
-        }
-    }
-
-    public class FoodPellet {
-        private double x;
-        private double y;
-        private final int SIZE = 20;
-        private Color color;
-        private GraphicsContext gc;
-
-
-        public void spawn(int boardWidth, int boardHeight) {
-            Random random = new Random();
-            x = random.nextInt(boardWidth / SIZE) * SIZE;
-            y = random.nextInt(boardHeight / SIZE) * SIZE;
-            draw();
-        }
-
-        public void draw() {
-            gc.setFill(color);
-            gc.fillOval(x, y, SIZE, SIZE);
-        }
-
-        public boolean detectCollision(Point2D head) {
-            return head.getX() == x && head.getY() == y;
-        }
-
-    }
-
-    public class Board {
-        private int width;
-        private int height;
-        private Color backgroundColor;
-        private Snake snake;
-        private List<FoodPellet> foodPellets;
-        private GraphicsContext gc;
-
-
-        public void initialize() {
-            snake = new Snake();
-            foodPellets = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
-                spawnFoodPellet();
-            }
-        }
-
-        public void update() {
-            snake.move();
-            checkCollisionsWithFood();
-            checkCollisionsWithBounds();
-        }
-
-        private void checkCollisionsWithFood() {
-            Point2D head = snake.getBody().get(0);
-            FoodPellet toRemove = null;
-            for (FoodPellet pellet : foodPellets) {
-                if (pellet.detectCollision(head)) {
-                    snake.grow();
-                    toRemove = pellet;
-                    break;
-                }
-            }
-            if (toRemove != null) {
-                foodPellets.remove(toRemove);
-                spawnFoodPellet();
-            }
-        }
-
-        private void checkCollisionsWithBounds() {
-            Point2D head = snake.getBody().get(0);
-            if (head.getX() < 0 || head.getY() < 0 || head.getX() >= width * SIZE || head.getY() >= height * SIZE) {
-                // Handle collision with the boundaries
-            }
-        }
-
-        // Existing getters and setters
-    }
 }
+    
 
 
     
