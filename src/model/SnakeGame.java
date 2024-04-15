@@ -42,16 +42,10 @@ public class SnakeGame {
      */
     private void setupGameLoop() {
         gameLoop = new AnimationTimer() {
-            private long lastUpdate = 0;
-            private final long interval = 100_000_000; // Nanoseconds (100ms)
-            
             @Override
             public void handle(long now) {
-                if (now - lastUpdate >= interval) {
-                    update();
-                    render();
-                    lastUpdate = now;
-                }
+                update();
+                render();
             }
         };
     }
