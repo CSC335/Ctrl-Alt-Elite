@@ -136,4 +136,13 @@ public class SnakeGame {
                 break;
         }
     }
+    
+    /**
+     * Get the ScoreManager of the game
+     *
+     * @return A ScoreManager that contains the current and high scores
+     */
+    public ScoreManager getScoreManager() {
+        return scoreManager;
+    }
 }

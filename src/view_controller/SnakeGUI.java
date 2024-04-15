@@ -31,7 +31,7 @@ public class SnakeGUI extends Application {
      * @param primaryStage A Stage used to display the elements of the game
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage){
         StackPane root = new StackPane();
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
