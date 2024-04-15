@@ -61,7 +61,7 @@ public class Snake {
     public void draw(GraphicsContext gc) {
         gc.setFill(color); // Set the fill color for the snake
         for (Point point : body) {
-            gc.fillRect(point.getX(), point.getY(), 10, 10); // Draw each body segment of the snake
+            gc.fillRect(point.getX(), point.getY(), 20, 20); // Draw each body segment of the snake
         }
     }
     
@@ -132,5 +132,6 @@ public class Snake {
         public int getY() {
             return y;
         }
+        
     }
 }

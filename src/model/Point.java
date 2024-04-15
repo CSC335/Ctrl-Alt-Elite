@@ -39,6 +39,14 @@ public class Point {
         return y;
     }
     
+    public int getTileX() {
+    	return Math.floorDiv(x, 20);
+    }
+    
+    public int getTileY() {
+    	return Math.floorDiv(y, 20);
+    }
+    
     /**
      * Set the x-coordinate to a new square
      *

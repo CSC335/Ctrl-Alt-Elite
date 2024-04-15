@@ -54,7 +54,6 @@ public class SnakeGame {
      * Start the game loop
      */
     public void start() {
-        board.initialize();
         gameLoop.start();
     }
     

@@ -113,9 +113,13 @@ public class Board {
         
         // collided with its own body
         if (snake.getBody().size() != 1) {
-            for (Point segment : snake.getBody()) {
-                if (head.getX() == segment.getX() && head.getY() == segment.getY())
-                    return true;
+        	for (int i = 1; i<snake.getBody().size(); i++) {
+        		Point segment = snake.getBody().get(i);
+        	
+                if (head.getX() == segment.getX() && head.getY() == segment.getY()) {
+                	System.out.println("collided with own body");
+                	return true;
+                }
             }
         }
         

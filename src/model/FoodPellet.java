@@ -12,10 +12,12 @@ import javafx.scene.paint.Color;
  */
 
 public class FoodPellet {
-    private int SIZE = 2; // width & height of pellet - circle shape
+    private int SIZE = 20; // size of a tile
     private Color color;
     private int x;
     private int y;
+    private int tileX;
+    private int tileY;
     private boolean isEaten = false;
     private GraphicsContext gc;
     private Color[] pelletColors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PINK,
@@ -48,6 +50,10 @@ public class FoodPellet {
         random = new Random();
         x = random.nextInt(boardWidth);
         y = random.nextInt(boardHeight);
+        
+        tileX = Math.floorDiv(x, SIZE);
+        tileY = Math.floorDiv(y, SIZE);
+        
         draw();
     }
     
@@ -55,8 +61,8 @@ public class FoodPellet {
      * Draw the FoodPellet at the current location on the board
      */
     public void draw() {
-        gc.setStroke(color);
-        gc.fillOval(x, y, SIZE, SIZE);
+        gc.setFill(color);
+        gc.fillRect(tileX * SIZE, tileY * SIZE, SIZE, SIZE);
     }
     
     /**
@@ -77,7 +83,7 @@ public class FoodPellet {
      * @return True if the head of the Snake has collided, False otherwise
      */
     public boolean detectCollision(Point head) {
-        if (head.getX() == getX() && head.getY() == getY()) {
+        if (head.getTileX() == tileX && head.getTileY() == tileY) {
             isEaten = true;
             return true;
         }
