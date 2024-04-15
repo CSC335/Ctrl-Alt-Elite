@@ -1,4 +1,5 @@
 package view_controller;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -8,8 +9,14 @@ import javafx.stage.Stage;
 
 import model.SnakeGame;
 
-public class SnakeGUI extends Application {
+/**
+ * A JavaFX GUI that represents a game of Snake
+ *
+ * @author Sameeka Maroli
+ */
 
+public class SnakeGUI extends Application {
+    
     private static final int WINDOW_WIDTH = 600;
     private static final int WINDOW_HEIGHT = 600;
     private static final int TILE_SIZE = 20;
@@ -17,27 +24,37 @@ public class SnakeGUI extends Application {
     private static final int COLUMNS = WINDOW_WIDTH / TILE_SIZE;
     
     private SnakeGame snakeGame;
-
+    
+    /**
+     * Initialize the game and display it to a window
+     *
+     * @param primaryStage A Stage used to display the elements of the game
+     */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         StackPane root = new StackPane();
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
-
+        
         snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, gc);
-
+        
         Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-
+        
         scene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
-
+        
         primaryStage.setTitle("Snake Game");
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        
         snakeGame.start(); // Start the game
     }
-
+    
+    /**
+     * Start the program
+     *
+     * @param args A String list
+     */
     public static void main(String[] args) {
         launch(args);
     }
