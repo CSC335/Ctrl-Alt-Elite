@@ -1,24 +1,28 @@
 package model;
 
 /**
- * Represents a square on the board of a game of Snake
+ * Represents a tile on the board of a game of Snake
  *
  * @author Vannela Chatla
  */
 
-public class Point {
+public class Tile {
     private int x;
     private int y;
+    private int tileX, tileY;
+    private static int TILE_SIZE = 20;
     
     /**
-     * Create a new Point object
+     * Create a new Tile object
      *
      * @param x The x-coordinate of the specified square
      * @param y The y-coordinate of the specified square
      */
-    public Point(int x, int y) {
+    public Tile(int x, int y) {
         this.x = x;
         this.y = y;
+        tileX = Math.floorDiv(x, TILE_SIZE);
+        tileY = Math.floorDiv(y, TILE_SIZE);
     }
     
     /**
@@ -40,11 +44,11 @@ public class Point {
     }
     
     public int getTileX() {
-    	return Math.floorDiv(x, 20);
+    	return tileX;
     }
     
     public int getTileY() {
-    	return Math.floorDiv(y, 20);
+    	return tileY;
     }
     
     /**
@@ -54,6 +58,7 @@ public class Point {
      */
     public void setX(int x) {
         this.x = x;
+        tileX = Math.floorDiv(x, TILE_SIZE);
     }
     
     /**
@@ -63,10 +68,11 @@ public class Point {
      */
     public void setY(int y) {
         this.y = y;
+        tileY = Math.floorDiv(y, TILE_SIZE);
     }
     
     /**
-     * Determine if this Point object is equal to another Point object
+     * Determine if this Tile object is equal to another Tile object
      *
      * @param obj Another object to be compared with this Point object
      * @return True if the other object is both a Point object and has the same x- and y-coordinates, False otherwise
@@ -79,12 +85,17 @@ public class Point {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Point point = (Point) obj;
-        return x == point.x && y == point.y;
+        Tile other = (Tile) obj;
+        return tileX == other.tileX && tileY == other.tileY;
+    }
+    
+    @Override
+    public String toString() {
+        return "(" + tileX + ", " + tileY + ")";
     }
     
     /**
-     * Calculate a hash code for this Point object
+     * Calculate a hash code for this Tile object
      *
      * @return An integer that represents the hash code
      */

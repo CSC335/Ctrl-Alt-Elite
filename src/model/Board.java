@@ -105,7 +105,7 @@ public class Board {
      * @return True if the Snake has hit the walls of the board or itself, False otherwise
      */
     public boolean isCollision() {
-        Point head = snake.getHead();
+        Tile head = snake.getHead();
         
         // collided with walls
         if (head.getX() < 0 || head.getX() > width || head.getY() < 0 || head.getY() > height)
@@ -114,9 +114,9 @@ public class Board {
         // collided with its own body
         if (snake.getBody().size() != 1) {
         	for (int i = 1; i<snake.getBody().size(); i++) {
-        		Point segment = snake.getBody().get(i);
+        		Tile segment = snake.getBody().get(i);
         	
-                if (head.getX() == segment.getX() && head.getY() == segment.getY()) {
+                if (segment.equals(head)) {
                 	System.out.println("collided with own body");
                 	return true;
                 }

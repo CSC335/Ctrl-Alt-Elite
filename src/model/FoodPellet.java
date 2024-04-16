@@ -12,12 +12,9 @@ import javafx.scene.paint.Color;
  */
 
 public class FoodPellet {
-    private int SIZE = 20; // size of a tile
+    private static int TILE_SIZE = 20; // size of a tile
     private Color color;
-    private int x;
-    private int y;
-    private int tileX;
-    private int tileY;
+    private Tile currentTile;
     private boolean isEaten = false;
     private GraphicsContext gc;
     private Color[] pelletColors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PINK,
@@ -48,11 +45,10 @@ public class FoodPellet {
         this.color = color;
         
         random = new Random();
-        x = random.nextInt(boardWidth);
-        y = random.nextInt(boardHeight);
+        int x = random.nextInt(boardWidth);
+        int y = random.nextInt(boardHeight);
         
-        tileX = Math.floorDiv(x, SIZE);
-        tileY = Math.floorDiv(y, SIZE);
+        currentTile = new Tile(x, y);
         
         draw();
     }
@@ -62,7 +58,7 @@ public class FoodPellet {
      */
     public void draw() {
         gc.setFill(color);
-        gc.fillRect(tileX * SIZE, tileY * SIZE, SIZE, SIZE);
+        gc.fillRect(currentTile.getTileX() * TILE_SIZE, currentTile.getTileY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
     
     /**
@@ -79,11 +75,11 @@ public class FoodPellet {
     /**
      * Detect collision with the head of the Snake
      *
-     * @param head A Point object representing the head of the Snake
+     * @param head A Tile object representing the head of the Snake
      * @return True if the head of the Snake has collided, False otherwise
      */
-    public boolean detectCollision(Point head) {
-        if (head.getTileX() == tileX && head.getTileY() == tileY) {
+    public boolean detectCollision(Tile head) {
+        if (head.equals(currentTile)) {
             isEaten = true;
             return true;
         }
@@ -100,20 +96,11 @@ public class FoodPellet {
     }
     
     /**
-     * Get the current x-coordinate of the FoodPellet
+     * Get the current tile of the FoodPellet
      *
-     * @return An integer representing the x-coordinate on the board
+     * @return A Tile object representing the tile location on the board
      */
-    public double getX() {
-        return x;
-    }
-    
-    /**
-     * Get the current y-coordinate of the FoodPellet
-     *
-     * @return An integer representing the y-coordinate on the board
-     */
-    public double getY() {
-        return y;
+    public Tile getCurrentTile() {
+        return currentTile;
     }
 }
