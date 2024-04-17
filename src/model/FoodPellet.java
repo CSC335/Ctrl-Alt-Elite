@@ -45,8 +45,8 @@ public class FoodPellet {
         this.color = color;
         
         random = new Random();
-        int x = random.nextInt(boardWidth);
-        int y = random.nextInt(boardHeight);
+        int x = random.nextInt(boardWidth-21);
+        int y = random.nextInt(boardHeight-21);
         
         currentTile = new Tile(x, y);
         

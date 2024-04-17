@@ -109,6 +109,16 @@ public class Snake {
     }
     
     /**
+     * The current direction of the Snake
+     *
+     * @param direction The direction the Snake is moving
+     */
+    public Direction getDirection() {
+    	return direction;
+    }
+    
+    
+    /**
      * Get the current size of the Snake
      *
      * @return An integer representing the size of the Snake

@@ -74,12 +74,13 @@ public class SnakeGame {
      * Update the location of the Snake and check for any special events
      */
     private void update() {
-        snake.move();
         if (board.isCollision()) {
             gameOver();
+            return;
         } else {
             checkFoodCollision();
         }
+        snake.move();
     }
     
     /**
