@@ -153,4 +153,18 @@ public class Snake {
         }
         
     }
+    
+    public Direction getDirection() {
+        return this.direction;
+    }
+
+    public boolean hasCollidedWithSelf() {
+        Tile head = getHead();
+        for (int i = 1; i < body.size(); i++) {
+            if (head.equals(body.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
