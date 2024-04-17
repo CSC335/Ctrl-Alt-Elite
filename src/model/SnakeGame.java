@@ -101,7 +101,7 @@ public class SnakeGame {
      */
     private void gameOver() {
         stop();
-        gc.setFill(Color.RED);
+        gc.setFill(Color.RED); // Check to see why the text doesn't display
         gc.setFont(Font.font(48));
         gc.fillText("Game Over", 200, 250);
         // gameOverHandler.show();
