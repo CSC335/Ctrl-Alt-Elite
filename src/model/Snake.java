@@ -107,15 +107,7 @@ public class Snake {
         }
         this.direction = direction;
     }
-    
-    /**
-     * The current direction of the Snake
-     *
-     * @param direction The direction the Snake is moving
-     */
-    public Direction getDirection() {
-    	return direction;
-    }
+
     
     
     /**
