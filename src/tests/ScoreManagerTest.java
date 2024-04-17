@@ -1,5 +1,11 @@
 package tests;
 
+/**
+ * A JavaFX GUI that represents a game of Snake
+ *
+ * @author Sameeka Maroli
+ */
+
 import model.ScoreManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

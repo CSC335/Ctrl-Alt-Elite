@@ -1,5 +1,11 @@
 package tests;
 
+/**
+ *
+ * @author Sameeka Maroli
+ */
+
+
 import model.FoodPellet;
 import model.Tile;
 import org.junit.jupiter.api.Test;

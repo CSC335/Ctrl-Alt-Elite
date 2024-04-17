@@ -1,14 +1,11 @@
 package tests;
 
-<<<<<<< HEAD
-=======
+
 import javafx.embed.swing.JFXPanel;
->>>>>>> bcf1460586638a6d6fca06f1037ef2458194b835
 import javafx.scene.paint.Color;
 import model.Snake;
 import model.Snake.Direction;
 import model.Tile;
-<<<<<<< HEAD
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,11 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-=======
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
->>>>>>> bcf1460586638a6d6fca06f1037ef2458194b835
 
 public class SnakeTest {
 	
@@ -45,7 +40,6 @@ public class SnakeTest {
 		assertNotNull(snake.getHead());
 	}
 
-<<<<<<< HEAD
 	@Test
 	public void testSnakeMove() {
 		snake.move();
@@ -96,23 +90,22 @@ public class SnakeTest {
 //		assertTrue(snake.hasCollidedWithSelf(), "Snake should detect collision with itself.");
 //
 //	}
-=======
     @Test
-    public void testSnakeMove() {
+    public void testSnakeMove1() {
         snake.move();
         assertEquals(1, snake.size());
         assertNotNull(snake.getHead());
     }
 
     @Test
-    public void testSnakeGrow() {
+    public void testSnakeGrow1() {
         snake.grow();
         assertEquals(2, snake.size());
         assertNotNull(snake.getHead());
     }
 
     @Test
-    public void testSnakeSetDirection() {
+    public void testSnakeSetDirection1() {
         snake.setDirection(Snake.Direction.LEFT);
         assertEquals(Snake.Direction.LEFT, snake.getDirection());
     }
@@ -145,5 +138,4 @@ public class SnakeTest {
         snake.move();
         assertTrue(snake.hasCollidedWithSelf(), "Snake should detect collision with itself.");
     }
->>>>>>> bcf1460586638a6d6fca06f1037ef2458194b835
 }
