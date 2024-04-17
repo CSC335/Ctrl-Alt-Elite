@@ -1,5 +1,10 @@
 package tests;
 
+/**
+ 
+ * @author Vannela Chatla
+ */
+
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -34,6 +39,12 @@ public class SnakeGameTest {
         assertNotNull(snakeGame.getBoard());
         assertNotNull(snakeGame.getSnake());
         assertNotNull(snakeGame.getScoreManager());
+<<<<<<< HEAD
+=======
+//        assertNotNull(snakeGame.board);
+//        assertNotNull(snakeGame.snake);
+//        assertNotNull(snakeGame.scoreManager);
+>>>>>>> b95a3a72c16d54b6129474dc64335610911e381a
     }
 
     @Test
@@ -49,7 +60,22 @@ public class SnakeGameTest {
         assertEquals(Snake.Direction.LEFT, snakeGame.getSnake().getDirection());
 
         snakeGame.handleKeyPress(KeyCode.RIGHT);
+<<<<<<< HEAD
         assertNotEquals(Snake.Direction.RIGHT, snakeGame.getSnake().getDirection());
+=======
+        assertEquals(Snake.Direction.RIGHT, snakeGame.getSnake().getDirection());
+//        snakeGame.handleKeyPress(KeyCode.UP);
+//        assertEquals(Snake.Direction.UP, snakeGame.snake.getDirection());
+//
+//        snakeGame.handleKeyPress(KeyCode.DOWN);
+//       assertEquals(Snake.Direction.DOWN, snakeGame.snake.getDirection());
+//
+//        snakeGame.handleKeyPress(KeyCode.LEFT);
+//        assertEquals(Snake.Direction.LEFT, snakeGame.snake.getDirection());
+//
+//        snakeGame.handleKeyPress(KeyCode.RIGHT);
+//        assertEquals(Snake.Direction.RIGHT, snakeGame.snake.getDirection());
+>>>>>>> b95a3a72c16d54b6129474dc64335610911e381a
     }
 
 
