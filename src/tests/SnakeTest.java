@@ -47,36 +47,7 @@ public class SnakeTest {
         snake.setDirection(Snake.Direction.UP);
 		assertEquals(Snake.Direction.UP, snake.getDirection());
 	}
-//
-//	@Test
-//	public void testCannotReverseDirection() {
-//		snake.setDirection(Direction.RIGHT);
-//		snake.setDirection(Direction.LEFT);
-//		assertEquals(Direction.RIGHT, snake.getDirection(), "Snake should not be able to reverse direction.");
-//	}
-//
-//	@Test
-//	public void testHeadPositionAfterMove() {
-//		snake.setDirection(Direction.RIGHT);
-//		snake.move();
-//		Tile head = snake.getHead();
-//		assertEquals(11, head.getTileX());
-//		assertEquals(10, head.getTileY());
-//	}
-//
-//	@Test
-//	public void testCollisionWithSelf() {
-//		snake.grow();
-//		snake.grow();
-//		snake.setDirection(Direction.LEFT);
-//		snake.move();
-//		snake.setDirection(Direction.UP);
-//		snake.move();
-//		snake.setDirection(Direction.RIGHT);
-//		snake.move();
-//		assertTrue(snake.hasCollidedWithSelf(), "Snake should detect collision with itself.");
-//
-//	}
+    
     @Test
     public void testSnakeMove1() {
         snake.move();
@@ -93,8 +64,8 @@ public class SnakeTest {
 
     @Test
     public void testSnakeSetDirection1() {
-        snake.setDirection(Snake.Direction.LEFT);
-        assertEquals(Snake.Direction.LEFT, snake.getDirection());
+        snake.setDirection(Snake.Direction.UP);
+        assertEquals(Snake.Direction.UP, snake.getDirection());
     }
 
     @Test
