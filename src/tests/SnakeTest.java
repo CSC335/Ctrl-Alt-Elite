@@ -8,12 +8,6 @@ import model.Tile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SnakeTest {
@@ -83,6 +77,25 @@ public class SnakeTest {
 //		assertTrue(snake.hasCollidedWithSelf(), "Snake should detect collision with itself.");
 //
 //	}
+    @Test
+    public void testSnakeMove1() {
+        snake.move();
+        assertEquals(1, snake.size());
+        assertNotNull(snake.getHead());
+    }
+
+    @Test
+    public void testSnakeGrow1() {
+        snake.grow();
+        assertEquals(2, snake.size());
+        assertNotNull(snake.getHead());
+    }
+
+    @Test
+    public void testSnakeSetDirection1() {
+        snake.setDirection(Snake.Direction.LEFT);
+        assertEquals(Snake.Direction.LEFT, snake.getDirection());
+    }
 
     @Test
     public void testCannotReverseDirection() {
