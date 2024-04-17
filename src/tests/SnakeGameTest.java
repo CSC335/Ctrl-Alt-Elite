@@ -31,14 +31,21 @@ public class SnakeGameTest {
 
     @Test
     public void testSnakeGameInitialization() {
+<<<<<<< HEAD
         assertNotNull(snakeGame.getBoard());
         assertNotNull(snakeGame.getSnake());
         assertNotNull(snakeGame.getScoreManager());
+=======
+//        assertNotNull(snakeGame.board);
+//        assertNotNull(snakeGame.snake);
+//        assertNotNull(snakeGame.scoreManager);
+>>>>>>> bcf1460586638a6d6fca06f1037ef2458194b835
     }
 
     @Test
     public void testHandleKeyPress() {
         // Test handling key presses
+<<<<<<< HEAD
         snakeGame.handleKeyPress(KeyCode.UP);
         assertEquals(Snake.Direction.UP, snakeGame.getSnake().getDirection());
 
@@ -50,6 +57,19 @@ public class SnakeGameTest {
 
         snakeGame.handleKeyPress(KeyCode.RIGHT);
         assertEquals(Snake.Direction.RIGHT, snakeGame.getSnake().getDirection());
+=======
+//        snakeGame.handleKeyPress(KeyCode.UP);
+//        assertEquals(Snake.Direction.UP, snakeGame.snake.getDirection());
+//
+//        snakeGame.handleKeyPress(KeyCode.DOWN);
+//       assertEquals(Snake.Direction.DOWN, snakeGame.snake.getDirection());
+//
+//        snakeGame.handleKeyPress(KeyCode.LEFT);
+//        assertEquals(Snake.Direction.LEFT, snakeGame.snake.getDirection());
+//
+//        snakeGame.handleKeyPress(KeyCode.RIGHT);
+//        assertEquals(Snake.Direction.RIGHT, snakeGame.snake.getDirection());
+>>>>>>> bcf1460586638a6d6fca06f1037ef2458194b835
     }
 
 

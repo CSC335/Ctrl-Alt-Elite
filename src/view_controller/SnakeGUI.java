@@ -46,7 +46,11 @@ public class SnakeGUI extends Application {
         primaryStage.setTitle("Snake Game");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
+        // Display main menu, start game if that option is selected, show menus, etc.
+
         snakeGame.start(); // Start the game
     }
+
+    // Method to check the state of SnakeGame and display corresponding menus
 }

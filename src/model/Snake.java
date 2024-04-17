@@ -118,6 +118,30 @@ public class Snake {
     }
     
     /**
+     * Get the current direction the Snake is moving
+     *
+     * @return A Direction enum representing the current direction
+     */
+    public Direction getDirection() {
+        return this.direction;
+    }
+    
+    /**
+     * Determines if the Snake has collided with its own body
+     *
+     * @return True if there is a collision between the head and the body, False otherwise
+     */
+    public boolean hasCollidedWithSelf() {
+        Tile head = getHead();
+        for (int i = 1; i < body.size(); i++) {
+            if (head.equals(body.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * An enum that represents one of the four directions: Up, Down, Left, or Right
      */
     public enum Direction {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import model.Snake.Direction;
 
 /**
  * Represents the game board of a game of Snake
@@ -18,6 +19,7 @@ public class Board {
     private ArrayList<FoodPellet> foodPellets;
     private GraphicsContext gc;
     private Snake snake;
+    int TILE_SIZE = 20;
     
     /**
      * Create a new game board with the specified size and background color
@@ -106,22 +108,17 @@ public class Board {
      */
     public boolean isCollision() {
         Tile head = snake.getHead();
+        int tileWidth = Math.floorDiv(width, TILE_SIZE);
+        int tileHeight = Math.floorDiv(height, TILE_SIZE);
         
         // collided with walls
-        if (head.getX() < 0 || head.getX() > width || head.getY() < 0 || head.getY() > height)
+        if (head.getTileX() <= 0 || head.getTileX() >= tileWidth-1 || head.getTileY() <= 0 
+        	|| head.getTileY() >= tileHeight-1)
             return true;
         
         // collided with its own body
-        if (snake.getBody().size() != 1) {
-        	for (int i = 1; i<snake.getBody().size(); i++) {
-        		Tile segment = snake.getBody().get(i);
-        	
-                if (segment.equals(head)) {
-                	System.out.println("collided with own body");
-                	return true;
-                }
-            }
-        }
+        if (snake.hasCollidedWithSelf())
+            return true;
         
         return false;
     }

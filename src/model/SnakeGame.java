@@ -74,12 +74,13 @@ public class SnakeGame {
      * Update the location of the Snake and check for any special events
      */
     private void update() {
-        snake.move();
         if (board.isCollision()) {
             gameOver();
+            return;
         } else {
             checkFoodCollision();
         }
+        snake.move();
     }
     
     /**
@@ -100,7 +101,7 @@ public class SnakeGame {
      */
     private void gameOver() {
         stop();
-        gc.setFill(Color.RED);
+        gc.setFill(Color.RED); // Check to see why the text doesn't display
         gc.setFont(Font.font(48));
         gc.fillText("Game Over", 200, 250);
         // gameOverHandler.show();
@@ -143,5 +144,9 @@ public class SnakeGame {
      */
     public ScoreManager getScoreManager() {
         return scoreManager;
+    }
+    
+    public Snake getSnake() {
+        return this.snake;
     }
 }
