@@ -145,4 +145,8 @@ public class SnakeGame {
     public ScoreManager getScoreManager() {
         return scoreManager;
     }
+    
+    public Snake getSnake() {
+        return this.snake;
+    }
 }

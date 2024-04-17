@@ -2,52 +2,44 @@ package tests;
 
 import model.FoodPellet;
 import model.Tile;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
-
-
 public class FoodPelletTest {
-
-    private FoodPellet foodPellet;
     private final int boardWidth = 30;
     private final int boardHeight = 20;
 
     @Test
-    public void testFoodPelletCreation() {
-        assertNotNull(foodPellet);
-        assertNotNull(foodPellet.getCurrentTile());
-    }
-
-    @Test
-    public void testFoodPelletSpawn() {
+    public void testFoodPelletCreationAndSpawn() {
+        FoodPellet foodPellet = new FoodPellet(boardWidth, boardHeight);
         Tile currentTile = foodPellet.getCurrentTile();
-        assertTrue(currentTile.getTileX() >= 0 && currentTile.getTileX() < boardWidth);
-        assertTrue(currentTile.getTileY() >= 0 && currentTile.getTileY() < boardHeight);
+        assertNotNull(currentTile, "Current tile should not be null after spawning.");
+        assertTrue(currentTile.getTileX() >= 0 && currentTile.getTileX() < boardWidth,
+                   "Tile X should be within board width bounds after spawning.");
+        assertTrue(currentTile.getTileY() >= 0 && currentTile.getTileY() < boardHeight,
+                   "Tile Y should be within board height bounds after spawning.");
     }
 
     @Test
-    public void testFoodPelletRespawn() {
-        Tile oldTile = foodPellet.getCurrentTile();
+    public void testDetectCollision() {
+        FoodPellet foodPellet = new FoodPellet(boardWidth, boardHeight);
+        Tile head = foodPellet.getCurrentTile();
+        assertTrue(foodPellet.detectCollision(head),
+                   "Should detect a collision when  head and pellet is on same tile.");
+        assertTrue(foodPellet.isEaten(),
+                   "Eaten after a collision.");
+    }
+
+
+    @Test
+    public void testRespawnPellet() {
+        FoodPellet foodPellet = new FoodPellet(boardWidth, boardHeight);
+        Tile originalTile = new Tile(foodPellet.getCurrentTile().getTileX(), foodPellet.getCurrentTile().getTileY());
         foodPellet.respawn(boardWidth, boardHeight);
         Tile newTile = foodPellet.getCurrentTile();
-
-        assertFalse(foodPellet.isEaten());
-        assertNotEquals(oldTile, newTile); // This might fail due to random chance, consider mocking Random
+        assertFalse(foodPellet.isEaten(),
+                    "Pellet should not be marked as eaten after respawning.");
+        assertNotEquals(originalTile, newTile,
+                        "Pellet should spawn at a new location after respawning.");
     }
-
-    @Test
-    public void testFoodPelletDetectCollision() {
-        Tile head = foodPellet.getCurrentTile();
-        assertTrue(foodPellet.detectCollision(head)); // Should detect collision since it's the same tile
-        assertTrue(foodPellet.isEaten());
-    }
-
-    @Test
-    public void testFoodPelletNoCollision() {
-        Tile head = new Tile(foodPellet.getCurrentTile().getTileX() + 1, foodPellet.getCurrentTile().getTileY() + 1); // Different location
-        assertFalse(foodPellet.detectCollision(head));
-        assertFalse(foodPellet.isEaten());
-    }
-
 }

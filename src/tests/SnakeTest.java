@@ -1,27 +1,19 @@
 package tests;
 
-
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.paint.Color;
 import model.Snake;
 import model.Snake.Direction;
-
 import model.Tile;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.BeforeAll;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SnakeTest {
 	
-	@BeforeAll
+    @BeforeAll
     public static void setupJavaFXRuntime() {
-        new JFXPanel(); // Initializes the JavaFX environment
+        new JFXPanel(); 
     }
 
     private Snake snake;
@@ -41,14 +33,14 @@ public class SnakeTest {
     @Test
     public void testSnakeMove() {
         snake.move();
-        assertEquals(1, snake.size()); // Snake should not grow after moving
+        assertEquals(1, snake.size());
         assertNotNull(snake.getHead());
     }
 
     @Test
     public void testSnakeGrow() {
         snake.grow();
-        assertEquals(2, snake.size()); // Snake should grow after calling grow()
+        assertEquals(2, snake.size());
         assertNotNull(snake.getHead());
     }
 
@@ -70,8 +62,8 @@ public class SnakeTest {
         snake.setDirection(Direction.RIGHT);
         snake.move();
         Tile head = snake.getHead();
-        assertEquals(11, head.getTileX(), "Head X should increase by 1 when moving right.");
-        assertEquals(10, head.getTileY(), "Head Y should not change when moving horizontally.");
+        assertEquals(11, head.getTileX());
+        assertEquals(10, head.getTileY());
     }
     
     @Test
@@ -86,5 +78,4 @@ public class SnakeTest {
         snake.move();
         assertTrue(snake.hasCollidedWithSelf(), "Snake should detect collision with itself.");
     }
-
 }

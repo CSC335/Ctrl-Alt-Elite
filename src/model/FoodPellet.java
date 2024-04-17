@@ -12,13 +12,13 @@ import javafx.scene.paint.Color;
  */
 
 public class FoodPellet {
-    private static int TILE_SIZE = 20; // size of a tile
+    private static int TILE_SIZE = 20;
     private Color color;
     private Tile currentTile;
     private boolean isEaten = false;
-    private GraphicsContext gc;
-    private Color[] pelletColors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PINK,
-            Color.PURPLE};
+    private GraphicsContext gc;  // This is used only for drawing
+    private Color[] pelletColors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PINK, Color.PURPLE};
+
     
     /**
      * Create a new FoodPellet object for a given board size
@@ -32,6 +32,10 @@ public class FoodPellet {
         spawn(boardWidth, boardHeight);
     }
     
+    public FoodPellet(int boardWidth, int boardHeight) {
+        spawn(boardWidth, boardHeight);
+    }
+
     /**
      * Spawn the FoodPellet at a new location on the board
      *
@@ -40,19 +44,15 @@ public class FoodPellet {
      */
     public void spawn(int boardWidth, int boardHeight) {
         Random random = new Random();
-        int index = random.nextInt(6);
-        Color color = pelletColors[index];
-        this.color = color;
-        
-        random = new Random();
-        int x = random.nextInt(boardWidth-21);
-        int y = random.nextInt(boardHeight-21);
-        
+        int index = random.nextInt(pelletColors.length); // corrected to use the length of the array
+        this.color = pelletColors[index];
+
+        int x = random.nextInt(boardWidth - 1);
+        int y = random.nextInt(boardHeight - 1);
+
         currentTile = new Tile(x, y);
-        
-        draw();
     }
-    
+
     /**
      * Draw the FoodPellet at the current location on the board
      */
@@ -68,9 +68,13 @@ public class FoodPellet {
      * @param boardHeight An integer representing the height of the board
      */
     public void respawn(int boardWidth, int boardHeight) {
-        spawn(boardWidth, boardHeight);
+        Tile oldTile = new Tile(currentTile.getTileX(), currentTile.getTileY());
+        do {
+            spawn(boardWidth, boardHeight);
+        } while (oldTile.equals(currentTile));
         isEaten = false;
     }
+
     
     /**
      * Detect collision with the head of the Snake
