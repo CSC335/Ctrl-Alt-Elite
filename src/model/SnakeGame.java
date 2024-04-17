@@ -107,6 +107,19 @@ public class SnakeGame {
         // gameOverHandler.show();
     }
     
+//    private void gameOver() {
+//        stop();
+//        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());  // Clear the canvas for testing
+//        gc.setFill(Color.RED);
+//        gc.setFont(Font.font(48));
+//        System.out.println("Drawing Game Over text");  // Debugging output
+//        gc.fillText("Game Over", 200, 250);
+//        gc.setStroke(Color.WHITE);  // Adding a stroke to see if the fill is the issue
+//        gc.strokeText("Game Over", 200, 250);
+//    }
+//
+//    
+    //
     /**
      * Draw the entire board
      */
