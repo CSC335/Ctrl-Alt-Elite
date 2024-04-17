@@ -33,18 +33,6 @@ public class SnakeGameTest {
     
     @Test
     public void testSnakeGameInitialization() {
-        
-        assertNotNull(snakeGame.getBoard());
-        assertNotNull(snakeGame.getSnake());
-        assertNotNull(snakeGame.getScoreManager());
-        
-        assertNotNull(snakeGame.getBoard());
-        assertNotNull(snakeGame.getSnake());
-        assertNotNull(snakeGame.getScoreManager());
-        
-        assertNotNull(snakeGame.getBoard());
-        assertNotNull(snakeGame.getSnake());
-        assertNotNull(snakeGame.getScoreManager());
         assertNotNull(snakeGame.getBoard());
         assertNotNull(snakeGame.getSnake());
         assertNotNull(snakeGame.getScoreManager());
