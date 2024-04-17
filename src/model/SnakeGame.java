@@ -149,4 +149,8 @@ public class SnakeGame {
     public Snake getSnake() {
         return this.snake;
     }
+
+	public Object getBoard() {
+		return this.board;
+	}
 }
