@@ -117,15 +117,8 @@ public class Board {
             return true;
         
         // collided with its own body
-        if (snake.getBody().size() != 1) {
-        	for (int i = 1; i<snake.getBody().size(); i++) {
-        		Tile segment = snake.getBody().get(i);
-        	
-                if (segment.equals(head)) {
-                	return true;
-                }
-            }
-        }
+        if (snake.hasCollidedWithSelf())
+            return true;
         
         return false;
     }

@@ -107,8 +107,6 @@ public class Snake {
         }
         this.direction = direction;
     }
-
-    
     
     /**
      * Get the current size of the Snake
@@ -117,6 +115,30 @@ public class Snake {
      */
     public int size() {
         return body.size();
+    }
+    
+    /**
+     * Get the current direction the Snake is moving
+     *
+     * @return A Direction enum representing the current direction
+     */
+    public Direction getDirection() {
+        return this.direction;
+    }
+    
+    /**
+     * Determines if the Snake has collided with its own body
+     *
+     * @return True if there is a collision between the head and the body, False otherwise
+     */
+    public boolean hasCollidedWithSelf() {
+        Tile head = getHead();
+        for (int i = 1; i < body.size(); i++) {
+            if (head.equals(body.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
@@ -144,19 +166,5 @@ public class Snake {
             return y;
         }
         
-    }
-    
-    public Direction getDirection() {
-        return this.direction;
-    }
-
-    public boolean hasCollidedWithSelf() {
-        Tile head = getHead();
-        for (int i = 1; i < body.size(); i++) {
-            if (head.equals(body.get(i))) {
-                return true;
-            }
-        }
-        return false;
     }
 }
