@@ -47,8 +47,8 @@ public class FoodPellet {
         int index = random.nextInt(pelletColors.length); // corrected to use the length of the array
         this.color = pelletColors[index];
 
-        int x = random.nextInt(boardWidth - 1);
-        int y = random.nextInt(boardHeight - 1);
+        int x = random.nextInt(boardWidth - TILE_SIZE - 1);
+        int y = random.nextInt(boardHeight - TILE_SIZE - 1);
 
         currentTile = new Tile(x, y);
     }
