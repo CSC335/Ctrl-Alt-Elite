@@ -31,25 +31,25 @@ public class SnakeGameTest {
 
     @Test
     public void testSnakeGameInitialization() {
-        assertNotNull(snakeGame.board);
-        assertNotNull(snakeGame.snake);
-        assertNotNull(snakeGame.scoreManager);
+        assertNotNull(snakeGame.getBoard());
+        assertNotNull(snakeGame.getSnake());
+        assertNotNull(snakeGame.getScoreManager());
     }
 
     @Test
     public void testHandleKeyPress() {
         // Test handling key presses
         snakeGame.handleKeyPress(KeyCode.UP);
-        assertEquals(Snake.Direction.UP, snakeGame.snake.getDirection());
+        assertEquals(Snake.Direction.UP, snakeGame.getSnake().getDirection());
 
         snakeGame.handleKeyPress(KeyCode.DOWN);
-       assertEquals(Snake.Direction.DOWN, snakeGame.snake.getDirection());
+       assertEquals(Snake.Direction.DOWN, snakeGame.getSnake().getDirection());
 
         snakeGame.handleKeyPress(KeyCode.LEFT);
-        assertEquals(Snake.Direction.LEFT, snakeGame.snake.getDirection());
+        assertEquals(Snake.Direction.LEFT, snakeGame.getSnake().getDirection());
 
         snakeGame.handleKeyPress(KeyCode.RIGHT);
-        assertEquals(Snake.Direction.RIGHT, snakeGame.snake.getDirection());
+        assertEquals(Snake.Direction.RIGHT, snakeGame.getSnake().getDirection());
     }
 
 
