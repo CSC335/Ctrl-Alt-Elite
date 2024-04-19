@@ -19,6 +19,7 @@ public class SnakeGame {
     private GraphicsContext gc;
     
     private AnimationTimer gameLoop;
+    private long interval;
     
     /**
      * Create a new SnakeGame object with a given board size
@@ -27,14 +28,14 @@ public class SnakeGame {
      * @param height An integer that represents the height of the game board
      * @param gc     A GraphicsContext used to draw the actors of the game
      */
-    public SnakeGame(int width, int height, GraphicsContext gc) {
+    public SnakeGame(int width, int height, long interval, GraphicsContext gc) {
         this.gc = gc;
         this.snake = new Snake(width / 2, height / 2, Color.GREEN);
         this.board = new Board(width, height, Color.BLACK, gc, snake);
         this.scoreManager = new ScoreManager();
+        this.interval = interval; // Nanoseconds (100ms)
         
         setupGameLoop();
-        start();
     }
     
     /**
@@ -43,7 +44,6 @@ public class SnakeGame {
     private void setupGameLoop() {
         gameLoop = new AnimationTimer() {
             private long lastUpdate = 0;
-            private final long interval = 100_000_000; // Nanoseconds (100ms)
             
             @Override
             public void handle(long now) {
