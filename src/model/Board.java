@@ -30,34 +30,34 @@ public class Board {
      * @param gc              A GraphicsContext used to draw the game board
      * @param snake           A Snake object representing the player
      */
-    public Board(int width, int height, Color backgroundColor, GraphicsContext gc, Snake snake) {
+    public Board(int width, int height, int numPellets, Color backgroundColor, GraphicsContext gc, Snake snake) {
         this.gc = gc;
         this.width = width;
         this.height = height;
         this.backgroundColor = backgroundColor;
         this.snake = snake;
         foodPellets = new ArrayList<>();
-        initialize();
+        initialize(numPellets);
     }
     
     /**
      * Set up the board by drawing the background color and spawn in the first FoodPellet
      */
-    public void initialize() {
+    public void initialize(int numPellets) {
         gc.setFill(backgroundColor);
         gc.fillRect(0, 0, width, height);
         
         // spawn 5 random food pellets - adjust number if not enough/too much
-        for (int i = 0; i < 5; i++) {
-            spawnFoodPellet();
+        for (int i = 0; i < numPellets; i++) {
+            spawnFoodPellet(numPellets);
         }
     }
     
     /**
      * Create a new FoodPellet and spawn it on the board
      */
-    public void spawnFoodPellet() {
-        FoodPellet pellet = new FoodPellet(width, height, gc);
+    public void spawnFoodPellet(int numPellets) {
+        FoodPellet pellet = new FoodPellet(width, height, numPellets == 1, gc);
         foodPellets.add(pellet);
     }
     

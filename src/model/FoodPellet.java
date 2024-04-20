@@ -17,8 +17,8 @@ public class FoodPellet {
     private Tile currentTile;
     private boolean isEaten = false;
     private GraphicsContext gc;  // This is used only for drawing
-    private Color[] pelletColors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.PINK, Color.PURPLE};
-
+    private Color[] pelletColors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.CYAN, Color.BLUE, Color.PINK, Color.PURPLE};
+    private boolean isWhite;
     
     /**
      * Create a new FoodPellet object for a given board size
@@ -27,8 +27,9 @@ public class FoodPellet {
      * @param boardHeight An integer representing the board height
      * @param gc          A GraphicsContext used to draw the FoodPellet
      */
-    public FoodPellet(int boardWidth, int boardHeight, GraphicsContext gc) {
+    public FoodPellet(int boardWidth, int boardHeight, boolean isWhite, GraphicsContext gc) {
         this.gc = gc;
+        this.isWhite = isWhite;;
         spawn(boardWidth, boardHeight);
     }
     
@@ -44,8 +45,14 @@ public class FoodPellet {
      */
     public void spawn(int boardWidth, int boardHeight) {
         Random random = new Random();
-        int index = random.nextInt(pelletColors.length); // corrected to use the length of the array
-        this.color = pelletColors[index];
+        int index;
+        
+        if (isWhite) {
+            this.color = Color.WHITE;
+        } else {
+            index = random.nextInt(pelletColors.length); // corrected to use the length of the array
+            this.color = pelletColors[index];
+        }
 
         int x = random.nextInt(boardWidth - TILE_SIZE - 1);
         int y = random.nextInt(boardHeight - TILE_SIZE - 1);

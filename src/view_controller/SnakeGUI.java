@@ -54,7 +54,7 @@ public class SnakeGUI extends Application {
         // Resize the stage and scene to show the full game
         Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, settingsMenu.getCurrentInterval(), gc);
+        snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, settingsMenu.getCurrentInterval(), settingsMenu.getNumPellets(), gc);
         
         // Create root node to hold the Canvas
         StackPane root = new StackPane();

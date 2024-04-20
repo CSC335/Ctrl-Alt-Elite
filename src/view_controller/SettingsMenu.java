@@ -17,35 +17,39 @@ public class SettingsMenu extends VBox {
     private static final long HARD_INTERVAL = 50_000_000;
     private static final long NIGHTMARE_INTERVAL = 25_000_000;
     
-    private Label difficulty, sizeLabel, mode;
-    private Slider boardSize;
-    private Button easy, medium, hard, nightmare, backButton;
+    private Label difficultyLabel, sizeLabel, modeLabel;
+    private Slider boardSizeSlider;
+    private Button easy, medium, hard, nightmare, backButton, regularMode, frenzyMode;
     
-    private CustomFont customFont;
+    private CustomFont labelFont, settingsFont;
     private Background background;
     
     private SnakeGUI snakeGUI;
     private Stage stage;
     private long currentInterval;
+    private int numPellets;
     
     public SettingsMenu(SnakeGUI snakeGUI, Stage stage) {
         this.snakeGUI = snakeGUI;
         this.stage = stage;
         currentInterval = MEDIUM_INTERVAL;
-        customFont = new CustomFont(12);
+        numPellets = 1;
+        settingsFont = new CustomFont(12);
+        labelFont = new CustomFont(16);
         background = new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY));
+        
         initializeElements();
         addListeners();
         layoutGUI();
     }
     
     private void initializeElements() {
-        difficulty = new Label("Difficulty");
+        difficultyLabel = new Label("Difficulty");
         sizeLabel = new Label("Board Size");
-        mode = new Label("Game Mode");
-        setFont(difficulty);
+        modeLabel = new Label("Game Mode");
+        setFont(difficultyLabel);
         setFont(sizeLabel);
-        setFont(mode);
+        setFont(modeLabel);
         
         easy = new Button("Easy");
         medium = new Button("Normal");
@@ -57,15 +61,21 @@ public class SettingsMenu extends VBox {
         setFont(nightmare);
         medium.setTextFill(Color.CYAN);
         
+        regularMode = new Button("Regular");
+        frenzyMode = new Button("Frenzy");
+        setFont(regularMode);
+        setFont(frenzyMode);
+        regularMode.setTextFill(Color.CYAN);
+        
         int min = 20, max = 50;
-        boardSize = new Slider(min, max, 30);
-        boardSize.setSnapToTicks(true);
-        boardSize.setMajorTickUnit(10);
-        boardSize.setBlockIncrement(1);
-        boardSize.setMinorTickCount(0);
-        boardSize.setShowTickMarks(true);
-        boardSize.setShowTickLabels(true);
-        boardSize.setMaxWidth(400);
+        boardSizeSlider = new Slider(min, max, 30);
+        boardSizeSlider.setSnapToTicks(true);
+        boardSizeSlider.setMajorTickUnit(10);
+        boardSizeSlider.setBlockIncrement(1);
+        boardSizeSlider.setMinorTickCount(0);
+        boardSizeSlider.setShowTickMarks(true);
+        boardSizeSlider.setShowTickLabels(true);
+        boardSizeSlider.setMaxWidth(400);
         
         backButton = new Button("Back");
         setFont(backButton);
@@ -77,7 +87,10 @@ public class SettingsMenu extends VBox {
         hard.setOnAction(new DifficultyHandler());
         nightmare.setOnAction(new DifficultyHandler());
         
-        boardSize.valueProperty().addListener(
+        regularMode.setOnAction(new ModeHandler());
+        frenzyMode.setOnAction(new ModeHandler());
+        
+        boardSizeSlider.valueProperty().addListener(
                 (observable, oldValue, newValue) -> snakeGUI.setWindowSize(newValue.intValue(), newValue.intValue()));
         
         backButton.setOnAction(event -> {
@@ -86,13 +99,13 @@ public class SettingsMenu extends VBox {
     }
     
     private void setFont(Label label) {
-        label.setFont(customFont.getCustomFont());
+        label.setFont(labelFont.getCustomFont());
         label.setTextFill(Color.WHITE);
         label.setBackground(background);
     }
     
     private void setFont(Button button) {
-        button.setFont(customFont.getCustomFont());
+        button.setFont(settingsFont.getCustomFont());
         button.setTextFill(Color.WHITE);
         button.setBackground(background);
     }
@@ -103,8 +116,12 @@ public class SettingsMenu extends VBox {
         difficultySettings.setSpacing(20);
         difficultySettings.setAlignment(Pos.CENTER);
         
-        this.getChildren().addAll(difficulty, difficultySettings, spacingButton() , sizeLabel ,boardSize,
-                spacingButton(), backButton);
+        HBox modeSettings = new HBox();
+        modeSettings.getChildren().addAll(regularMode, frenzyMode);
+        modeSettings.setAlignment(Pos.CENTER);
+        
+        this.getChildren().addAll(difficultyLabel, difficultySettings, spacingButton() , sizeLabel , boardSizeSlider,
+                spacingButton(), modeLabel, modeSettings, spacingButton(), backButton);
         this.setAlignment(Pos.CENTER);
         this.setBackground(background);
         this.setSpacing(20);
@@ -119,6 +136,10 @@ public class SettingsMenu extends VBox {
     
     public long getCurrentInterval() {
         return currentInterval;
+    }
+    
+    public int getNumPellets() {
+        return numPellets;
     }
     
     private class DifficultyHandler implements EventHandler<ActionEvent> {
@@ -144,6 +165,43 @@ public class SettingsMenu extends VBox {
             source.setTextFill(Color.CYAN);
         }
         
+    }
+    
+    private class ModeHandler implements EventHandler<ActionEvent> {
+        
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Button source = (Button) actionEvent.getSource();
+            regularMode.setTextFill(Color.WHITE);
+            frenzyMode.setTextFill(Color.WHITE);
+            
+            if (source.equals(regularMode)) {
+                numPellets = 1;
+                currentInterval = MEDIUM_INTERVAL;
+                
+                easy.setTextFill(Color.WHITE);
+                hard.setTextFill(Color.WHITE);
+                nightmare.setTextFill(Color.WHITE);
+                medium.setTextFill(Color.CYAN);
+                
+                boardSizeSlider.setValue(30);
+                snakeGUI.setWindowSize((int) boardSizeSlider.getValue(), (int) boardSizeSlider.getValue());
+            }
+            else if (source.equals(frenzyMode)) {
+                numPellets = 10;
+                currentInterval = NIGHTMARE_INTERVAL;
+                
+                easy.setTextFill(Color.WHITE);
+                medium.setTextFill(Color.WHITE);
+                hard.setTextFill(Color.WHITE);
+                nightmare.setTextFill(Color.CYAN);
+                
+                boardSizeSlider.setValue(50);
+                snakeGUI.setWindowSize((int) boardSizeSlider.getValue(), (int) boardSizeSlider.getValue());
+            }
+            
+            source.setTextFill(Color.CYAN);
+        }
     }
     
 }

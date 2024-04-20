@@ -28,10 +28,10 @@ public class SnakeGame {
      * @param height An integer that represents the height of the game board
      * @param gc     A GraphicsContext used to draw the actors of the game
      */
-    public SnakeGame(int width, int height, long interval, GraphicsContext gc) {
+    public SnakeGame(int width, int height, long interval, int numPellets, GraphicsContext gc) {
         this.gc = gc;
         this.snake = new Snake(width / 2, height / 2, Color.GREEN);
-        this.board = new Board(width, height, Color.BLACK, gc, snake);
+        this.board = new Board(width, height, numPellets, Color.BLACK, gc, snake);
         this.scoreManager = new ScoreManager();
         this.interval = interval; // Nanoseconds (100ms)
         
