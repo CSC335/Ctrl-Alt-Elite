@@ -20,16 +20,14 @@ import model.SnakeGame;
 
 public class SnakeGUI extends Application {
     
+    private static final int TILE_SIZE = 20;
     private int WINDOW_WIDTH = 600;
     private int WINDOW_HEIGHT = 600;
-    private static final int TILE_SIZE = 20;
     private int ROWS = WINDOW_HEIGHT / TILE_SIZE;
     private int COLUMNS = WINDOW_WIDTH / TILE_SIZE;
     
     private SnakeGame snakeGame;
     private Scene currentScene;
-    private Canvas canvas;
-    private GraphicsContext gc;
     
     private SettingsMenu settingsMenu;
     
@@ -51,18 +49,26 @@ public class SnakeGUI extends Application {
     }
 
     public void startGame(Stage primaryStage) {
-        //primaryStage.close();
-        //primaryStage.setWidth(WINDOW_WIDTH);
-        //primaryStage.setHeight(WINDOW_HEIGHT);
-        canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-        gc = canvas.getGraphicsContext2D();
-        snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, settingsMenu.getCurrentInterval(), gc);
-        primaryStage.show();
+        primaryStage.close();
         
-        currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
+        // Resize the stage and scene to show the full game
+        Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, settingsMenu.getCurrentInterval(), gc);
+        
+        // Create root node to hold the Canvas
         StackPane root = new StackPane();
         root.getChildren().add(canvas);
-        currentScene.setRoot(root);
+        currentScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
+        
+        // Re-initialize the Stage
+        primaryStage = new Stage();
+        primaryStage.setTitle("Snake Game");
+        primaryStage.setScene(currentScene);
+        primaryStage.setResizable(false);
+        
+        primaryStage.show();
         snakeGame.start();
     }
     
