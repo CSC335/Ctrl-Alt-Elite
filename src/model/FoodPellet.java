@@ -54,8 +54,8 @@ public class FoodPellet {
             this.color = pelletColors[index];
         }
 
-        int x = random.nextInt(boardWidth - TILE_SIZE - 1);
-        int y = random.nextInt(boardHeight - TILE_SIZE - 1);
+        int x = random.nextInt(boardWidth - 2 * TILE_SIZE);
+        int y = random.nextInt(boardHeight - 2 *TILE_SIZE);
 
         currentTile = new Tile(x, y);
     }

@@ -125,8 +125,8 @@ public class SnakeGUI extends Application {
 	private void setOnCloseRequest(Stage primaryStage) {
 		SnakeAccount currentAccount = loginPane.getCurrentAccount();
 		primaryStage.setOnCloseRequest(event -> {
-			if (currentAccount != null
-					|| snakeGame.getScoreManager().getCurrentScore() > accountCollection.getOverallHighScore()) {
+			if (snakeGame != null && (currentAccount != null
+					|| snakeGame.getScoreManager().getCurrentScore() > accountCollection.getOverallHighScore())) {
 				saveAlert(primaryStage);
 			}
 		});

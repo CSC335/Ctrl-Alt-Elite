@@ -1,5 +1,7 @@
 package view_controller;
 
+import java.util.List;
+
 /**
  * LoginPane snake class
  *
@@ -8,6 +10,7 @@ package view_controller;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -151,6 +154,13 @@ public class LoginPane extends VBox {
 	private void addNewAccount() {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
+		
+        for (SnakeAccount account : accountCollection.getAccounts()) {
+            if (account.getUsername().equals(username)) {
+            	statusLabel.setText("username taken");
+                return;
+            }
+        }
 		SnakeAccount newAccount = new SnakeAccount(username, password);
 		accountCollection.addAccount(newAccount);
 		statusLabel.setText("Account created");
