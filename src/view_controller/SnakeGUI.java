@@ -123,13 +123,16 @@ public class SnakeGUI extends Application {
 	}
 
 	private void setOnCloseRequest(Stage primaryStage) {
-		SnakeAccount currentAccount = loginPane.getCurrentAccount();
-		primaryStage.setOnCloseRequest(event -> {
-			if (snakeGame != null && (currentAccount != null
-					|| snakeGame.getScoreManager().getCurrentScore() > accountCollection.getOverallHighScore())) {
-				saveAlert(primaryStage);
-			}
-		});
+		if (snakeGame != null) {
+			primaryStage.setOnCloseRequest(event -> {
+				if (loginPane.getCurrentAccount() != null || snakeGame.getScoreManager().getCurrentScore() > accountCollection.getOverallHighScore()) {		
+
+					if (loginPane.getCurrentAccount() != null && snakeGame.getScoreManager().getCurrentScore() > loginPane.getCurrentAccount().getHighScore()){
+						loginPane.getCurrentAccount().setHighScore(snakeGame.getScoreManager().getCurrentScore());
+					}
+					saveAlert(primaryStage);
+				}	
+		});}
 	}
 
 	private void getAccounts() {
