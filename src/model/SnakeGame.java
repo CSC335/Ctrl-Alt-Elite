@@ -140,8 +140,9 @@ public class SnakeGame {
 	 * Displays the game over screen. //To Do: Sameeka
 	 */
 	public void displayGameOverScreen() {
-	    String gameOverText = "Game Over";
-	    gc.setFill(Color.PURPLE); 
+		String gameOverText = "Game Over";
+	    String restartText = "Press 'R' to Restart";
+	    gc.setFill(Color.PURPLE);
 	    gc.setFont(Font.font("Press Start 2P", FontWeight.BOLD, 48));
 
 	    javafx.scene.text.Text text = new javafx.scene.text.Text(gameOverText);
@@ -155,6 +156,14 @@ public class SnakeGame {
 	    gc.setEffect(new Glow(0.8));
 	    gc.fillText(gameOverText, x, y);
 	    gc.setEffect(null);
+
+	    gc.setFont(Font.font("Press Start 2P", FontWeight.BOLD, 24));
+	    text = new javafx.scene.text.Text(restartText);
+	    text.setFont(gc.getFont());
+	    textWidth = text.getBoundsInLocal().getWidth();
+	    y += 60;  
+	    x = (board.getWidth() - textWidth) / 2;
+	    gc.fillText(restartText, x, y);
 	}
 	/**
 	 * Change the direction of the Snake based on user inputted key presses
@@ -163,20 +172,26 @@ public class SnakeGame {
 	 */
 	@SuppressWarnings("incomplete-switch")
 	public void handleKeyPress(KeyCode keyCode) {
-		switch (keyCode) {
-		case UP:
-			snake.setDirection(Snake.Direction.UP);
-			break;
-		case DOWN:
-			snake.setDirection(Snake.Direction.DOWN);
-			break;
-		case LEFT:
-			snake.setDirection(Snake.Direction.LEFT);
-			break;
-		case RIGHT:
-			snake.setDirection(Snake.Direction.RIGHT);
-			break;
-		}
+	    if (isGameOver) {
+	        if (keyCode == KeyCode.R) {
+	            restartGame();
+	        }
+	    } else {
+	        switch (keyCode) {
+	            case UP:
+	                snake.setDirection(Snake.Direction.UP);
+	                break;
+	            case DOWN:
+	                snake.setDirection(Snake.Direction.DOWN);
+	                break;
+	            case LEFT:
+	                snake.setDirection(Snake.Direction.LEFT);
+	                break;
+	            case RIGHT:
+	                snake.setDirection(Snake.Direction.RIGHT);
+	                break;
+	        }
+	    }
 	}
 
 	/**
@@ -196,5 +211,16 @@ public class SnakeGame {
 		return this.board;
 	}
 	
+	public void restartGame() {
+	    snake = new Snake(board.getWidth() / 2, board.getHeight() / 2, Color.GREEN);
+	    board = new Board(board.getWidth(), board.getHeight(), 5, Color.BLACK, gc, snake);  // Assuming 5 pellets
+	    scoreManager.resetScore();
+	    isGameOver = false;
+
+	    // Restart the game loop
+	    setupGameLoop();
+	    start();
+	}
+
 
 }
