@@ -5,11 +5,14 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.effect.Glow;
+
 
 /**
  * Represents the game logic of a game of Snake
  *
- * @author Vannela Chatla
+ * @author Vannela Chatla and Sameeka Maroli
  */
 
 public class SnakeGame {
@@ -17,6 +20,7 @@ public class SnakeGame {
 	private Snake snake;
 	private ScoreManager scoreManager;
 	private GraphicsContext gc;
+	private boolean isGameOver;
 
 	private AnimationTimer gameLoop;
 	private long interval;
@@ -60,28 +64,30 @@ public class SnakeGame {
 	 * Start the game loop
 	 */
 	public void start() {
-		gameLoop.start();
-	}
-	
-	/**
-	 * Stop the game loop
-	 */
-	public void stop() {
-		gameLoop.stop();
-	}
+        gameLoop.start();
+    }
 
-	/**
-	 * Update the location of the Snake and check for any special events
-	 */
-	private void update() {
-		if (board.isCollision()) {
-			gameOver();
-			return;
-		} else {
-			checkFoodCollision();
-		}
-		snake.move();
-	}
+    public void stop() {
+        gameLoop.stop();
+    }
+
+    public boolean gameOver() {
+        isGameOver = true; // Set the game over flag
+        stop();
+
+        return true;
+    }
+
+    private void update() {
+        if (!isGameOver) {
+            if (board.isCollision()) {
+                gameOver();
+                return;
+            }
+            checkFoodCollision();
+            snake.move();
+        }
+    }
 
 	/**
 	 * Check if the Snake has eaten a FoodPellet and if so, grow the snake and
@@ -101,35 +107,55 @@ public class SnakeGame {
 	 * Check if the Snake has collided with itself or the walls of the board and
 	 * activate a game over
 	 */
-	public boolean gameOver() {
-		stop();
-		gc.setFill(Color.RED); // Check to see why the text doesn't display
-		gc.setFont(Font.font(48));
-		gc.fillText("Game Over", 200, 250);
-		return true;
-		// gameOverHandler.show();
-	}
-
-//    private void gameOver() {
-//        stop();
-//        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());  // Clear the canvas for testing
-//        gc.setFill(Color.RED);
-//        gc.setFont(Font.font(48));
-//        System.out.println("Drawing Game Over text");  // Debugging output
-//        gc.fillText("Game Over", 200, 250);
-//        gc.setStroke(Color.WHITE);  // Adding a stroke to see if the fill is the issue
-//        gc.strokeText("Game Over", 200, 250);
-//    }
-//
-//    
 	//
 	/**
 	 * Draw the entire board
 	 */
-	private void render() {
-		board.update();
+	private void render() { //To Do: Sameeka
+	    if (!isGameOver) {
+	        board.update(); 
+
+	        String scoreText = "Score: " + scoreManager.getCurrentScore();
+	        double padding = 10;
+	        Font scoreFont = Font.font("Courier New", FontWeight.EXTRA_BOLD, 36);
+	        gc.setFont(scoreFont);
+
+	        javafx.scene.text.Text text = new javafx.scene.text.Text(scoreText);
+	        text.setFont(scoreFont);
+	        double textWidth = text.getBoundsInLocal().getWidth();
+	        double textY = padding + 36;
+	        double textX = board.getWidth() - textWidth - padding;
+
+	        gc.setStroke(Color.WHITE); 
+	        gc.setLineWidth(2);
+	        gc.strokeText(scoreText, textX, textY); 
+	        gc.setFill(Color.RED); 
+	        gc.fillText(scoreText, textX, textY); 
+	    } else {
+	        displayGameOverScreen();
+	    }
 	}
 
+	/**
+	 * Displays the game over screen. //To Do: Sameeka
+	 */
+	public void displayGameOverScreen() {
+	    String gameOverText = "Game Over";
+	    gc.setFill(Color.PURPLE); 
+	    gc.setFont(Font.font("Press Start 2P", FontWeight.BOLD, 48));
+
+	    javafx.scene.text.Text text = new javafx.scene.text.Text(gameOverText);
+	    text.setFont(gc.getFont());
+	    double textWidth = text.getBoundsInLocal().getWidth();
+	    double textHeight = text.getBoundsInLocal().getHeight();
+
+	    double x = (board.getWidth() - textWidth) / 2;
+	    double y = (board.getHeight() / 2) - (textHeight / 2);
+
+	    gc.setEffect(new Glow(0.8));
+	    gc.fillText(gameOverText, x, y);
+	    gc.setEffect(null);
+	}
 	/**
 	 * Change the direction of the Snake based on user inputted key presses
 	 *
@@ -169,4 +195,6 @@ public class SnakeGame {
 	public Object getBoard() {
 		return this.board;
 	}
+	
+
 }
