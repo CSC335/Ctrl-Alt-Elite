@@ -11,6 +11,7 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -43,6 +44,8 @@ public class LoginPane extends VBox {
 	private SnakeGUI snakeGUI;
 	private Stage stage;
 	private Background background;
+	private MainMenu mainMenu;
+
 	private CustomFont headerFont, optionsFont, labelFont;
 
 	public LoginPane(SnakeAccountCollection accountCollection, SnakeGUI snakeGUI, Stage stage) {
@@ -50,12 +53,20 @@ public class LoginPane extends VBox {
 		this.stage = stage;
 		this.accountCollection = accountCollection;
 
+		mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
+
 		headerFont = new CustomFont(40);
 		optionsFont = new CustomFont(14);
 		labelFont = new CustomFont(12);
 		background = new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY));
 		initializeComponents();
 		layoutComponents();
+	}
+
+	private void switchToMainMenu() {
+		Scene mainMenuScene = mainMenu.getScene();
+		Stage loginStage = (Stage) getScene().getWindow();
+		loginStage.setScene(mainMenuScene);
 	}
 
 	private void initializeComponents() {
@@ -118,49 +129,46 @@ public class LoginPane extends VBox {
 	}
 
 	private void login() {
+	    String username = usernameField.getText();
+	    String password = passwordField.getText();
+
+	    for (SnakeAccount account : accountCollection.getAccounts()) {
+	        if (account.getUsername().equals(username)) {
+	            if (account.login(password)) {
+	                usernameField.clear();
+	                passwordField.clear();
+	                currentAccount = accountCollection.getAccount(account.getUsername());
+	                
+	                switchToMainMenu();
+	                
+	                return;
+	            } else {
+	                statusLabel.setText("Invalid password");
+	                return;
+	            }
+	        }
+	    }
+
+	    if (usernameField.getText() == "" || passwordField.getText() == "")
+	        statusLabel.setText("Please login to play or click skip");
+	    else {
+	        usernameField.clear();
+	        passwordField.clear();
+	        statusLabel.setText("Account not found");
+	    }
+	}
+
+
+	private void addNewAccount() {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
 
 		for (SnakeAccount account : accountCollection.getAccounts()) {
 			if (account.getUsername().equals(username)) {
-				if (account.login(password)) {
-					usernameField.clear();
-					passwordField.clear();
-					currentAccount = accountCollection.getAccount(account.getUsername());
-					snakeGUI.startGame(stage);
-					try {
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-
-					return;
-				} else {
-					statusLabel.setText("Invalid password");
-					return;
-				}
+				statusLabel.setText("username taken");
+				return;
 			}
 		}
-
-		if (usernameField.getText() == "" || passwordField.getText() == "")
-			statusLabel.setText("Please login to play or click skip");
-
-		else {
-			usernameField.clear();
-			passwordField.clear();
-			statusLabel.setText("Account not found");
-		}
-	}
-
-	private void addNewAccount() {
-		String username = usernameField.getText();
-		String password = passwordField.getText();
-		
-        for (SnakeAccount account : accountCollection.getAccounts()) {
-            if (account.getUsername().equals(username)) {
-            	statusLabel.setText("username taken");
-                return;
-            }
-        }
 		SnakeAccount newAccount = new SnakeAccount(username, password);
 		accountCollection.addAccount(newAccount);
 		statusLabel.setText("Account created");
