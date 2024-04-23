@@ -62,7 +62,7 @@ public class SnakeGame {
 	public void start() {
 		gameLoop.start();
 	}
-
+	
 	/**
 	 * Stop the game loop
 	 */

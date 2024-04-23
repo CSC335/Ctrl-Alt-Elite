@@ -17,11 +17,11 @@ public class SettingsMenu extends VBox {
     private static final long HARD_INTERVAL = 50_000_000;
     private static final long NIGHTMARE_INTERVAL = 25_000_000;
     
-    private Label difficultyLabel, sizeLabel, modeLabel;
+    private Label headerLabel, difficultyLabel, sizeLabel, modeLabel;
     private Slider boardSizeSlider;
     private Button easy, medium, hard, nightmare, backButton, regularMode, frenzyMode;
     
-    private CustomFont labelFont, settingsFont;
+    private CustomFont headerFont, labelFont, settingsFont;
     private Background background;
     
     private SnakeGUI snakeGUI;
@@ -35,6 +35,7 @@ public class SettingsMenu extends VBox {
         currentInterval = MEDIUM_INTERVAL;
         numPellets = 1;
         settingsFont = new CustomFont(12);
+        headerFont = new CustomFont(40);
         labelFont = new CustomFont(16);
         background = new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY));
         
@@ -44,12 +45,14 @@ public class SettingsMenu extends VBox {
     }
     
     private void initializeElements() {
+        headerLabel = new Label("Settings");
         difficultyLabel = new Label("Difficulty");
         sizeLabel = new Label("Board Size");
         modeLabel = new Label("Game Mode");
-        setFont(difficultyLabel);
-        setFont(sizeLabel);
-        setFont(modeLabel);
+        setFont(headerLabel, headerFont);
+        setFont(difficultyLabel, labelFont);
+        setFont(sizeLabel, labelFont);
+        setFont(modeLabel, labelFont);
         
         easy = new Button("Easy");
         medium = new Button("Normal");
@@ -98,8 +101,8 @@ public class SettingsMenu extends VBox {
         });
     }
     
-    private void setFont(Label label) {
-        label.setFont(labelFont.getCustomFont());
+    private void setFont(Label label, CustomFont customFont) {
+        label.setFont(customFont.getCustomFont());
         label.setTextFill(Color.WHITE);
         label.setBackground(background);
     }
@@ -120,8 +123,8 @@ public class SettingsMenu extends VBox {
         modeSettings.getChildren().addAll(regularMode, frenzyMode);
         modeSettings.setAlignment(Pos.CENTER);
         
-        this.getChildren().addAll(difficultyLabel, difficultySettings, spacingButton() , sizeLabel , boardSizeSlider,
-                spacingButton(), modeLabel, modeSettings, spacingButton(), backButton);
+        this.getChildren().addAll(headerLabel, spacingButton(), difficultyLabel, difficultySettings, spacingButton(),
+                sizeLabel, boardSizeSlider, spacingButton(), modeLabel, modeSettings, spacingButton(), backButton);
         this.setAlignment(Pos.CENTER);
         this.setBackground(background);
         this.setSpacing(20);
@@ -186,8 +189,7 @@ public class SettingsMenu extends VBox {
                 
                 boardSizeSlider.setValue(30);
                 snakeGUI.setWindowSize((int) boardSizeSlider.getValue(), (int) boardSizeSlider.getValue());
-            }
-            else if (source.equals(frenzyMode)) {
+            } else if (source.equals(frenzyMode)) {
                 numPellets = 10;
                 currentInterval = NIGHTMARE_INTERVAL;
                 
