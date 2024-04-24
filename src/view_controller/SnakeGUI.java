@@ -54,10 +54,10 @@ public class SnakeGUI extends Application {
 		// Display main menu, start game if that option is selected, show menus, etc.
 		loginPane = new LoginPane(accountCollection, this, primaryStage);
 		settingsMenu = new SettingsMenu(this, primaryStage);
-		mainMenu = new MainMenu(this, primaryStage, account.getUsername());
+		//mainMenu = new MainMenu(this, primaryStage, account.getUsername());
 		pauseMenu = new PauseMenu(this, snakeGame);
-		Scene mainMenuScene = mainMenu.getScene();
-		primaryStage.setScene(mainMenuScene);
+		//Scene mainMenuScene = mainMenu.getScene();
+		//primaryStage.setScene(mainMenuScene);
 
 		currentScene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
 		getAccounts();

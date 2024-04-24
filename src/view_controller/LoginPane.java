@@ -53,8 +53,6 @@ public class LoginPane extends VBox {
 		this.stage = stage;
 		this.accountCollection = accountCollection;
 
-		mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
-
 		headerFont = new CustomFont(40);
 		optionsFont = new CustomFont(14);
 		labelFont = new CustomFont(12);
@@ -138,6 +136,8 @@ public class LoginPane extends VBox {
 	                usernameField.clear();
 	                passwordField.clear();
 	                currentAccount = accountCollection.getAccount(account.getUsername());
+	                
+	        		mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
 	                
 	                switchToMainMenu();
 	                
