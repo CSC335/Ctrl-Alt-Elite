@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.SnakeAccount;
 import model.SnakeAccountCollection;
@@ -82,6 +83,7 @@ public class SnakeGUI extends Application {
 		// Create root node to hold the Canvas
 		StackPane root = new StackPane();
 		root.getChildren().add(canvas);
+		mainMenu.getScene().setRoot(new VBox()); // temporarily reset currentScene's root to free MainMenu
 		currentScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
 		currentScene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent key) -> {

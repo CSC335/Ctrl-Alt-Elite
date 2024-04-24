@@ -95,7 +95,7 @@ public class SettingsMenu extends VBox {
                 (observable, oldValue, newValue) -> snakeGUI.setWindowSize(newValue.intValue(), newValue.intValue()));
         
         backButton.setOnAction(event -> {
-            snakeGUI.startGame();
+            snakeGUI.setSceneRoot(snakeGUI.getMainMenu());
         });
     }
     
