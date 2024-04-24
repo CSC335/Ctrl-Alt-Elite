@@ -29,10 +29,14 @@ public class MainMenu extends VBox {
 
     public MainMenu(SnakeGUI snakeGUI, Stage stage, String username) {
         buttonFont = new CustomFont(BUTTON_FONT_SIZE);
-
+        if (username == null) {
+            username = "Guest";
+        }
         initializeComponents(snakeGUI, stage, username);
         layoutComponents();
     }
+
+    
 
     private void initializeComponents(SnakeGUI snakeGUI, Stage stage, String username) {
         startGameButton = new Button("Start Game");

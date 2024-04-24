@@ -53,8 +53,6 @@ public class LoginPane extends VBox {
 		this.stage = stage;
 		this.accountCollection = accountCollection;
 
-		mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
-
 		headerFont = new CustomFont(40);
 		optionsFont = new CustomFont(14);
 		labelFont = new CustomFont(12);
@@ -68,6 +66,8 @@ public class LoginPane extends VBox {
 		Stage loginStage = (Stage) getScene().getWindow();
 		loginStage.setScene(mainMenuScene);
 	}
+	
+	
 
 	private void initializeComponents() {
 		welcomeLabel = new Label("Snake");
@@ -137,10 +137,10 @@ public class LoginPane extends VBox {
 	            if (account.login(password)) {
 	                usernameField.clear();
 	                passwordField.clear();
-	                currentAccount = accountCollection.getAccount(account.getUsername());
-	                
+	                currentAccount = account;
+	                // Initialize MainMenu here after a successful login
+	                mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
 	                switchToMainMenu();
-	                
 	                return;
 	            } else {
 	                statusLabel.setText("Invalid password");
@@ -149,13 +149,7 @@ public class LoginPane extends VBox {
 	        }
 	    }
 
-	    if (usernameField.getText() == "" || passwordField.getText() == "")
-	        statusLabel.setText("Please login to play or click skip");
-	    else {
-	        usernameField.clear();
-	        passwordField.clear();
-	        statusLabel.setText("Account not found");
-	    }
+	    statusLabel.setText("Account not found or invalid credentials");
 	}
 
 
