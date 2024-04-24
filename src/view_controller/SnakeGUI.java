@@ -7,6 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -29,13 +31,14 @@ public class SnakeGUI extends Application {
 	private int ROWS = WINDOW_HEIGHT / TILE_SIZE;
 	private int COLUMNS = WINDOW_WIDTH / TILE_SIZE;
 	
-	
+	private Canvas canvas;
 
 	private SnakeGame snakeGame;
 	private Scene currentScene;
 	private SnakeAccount account; 
 	private LoginPane loginPane;
 	private SettingsMenu settingsMenu;
+	private PauseMenu pauseMenu;
 	private MainMenu mainMenu;
 
 	private SnakeAccountCollection accountCollection;
@@ -51,9 +54,10 @@ public class SnakeGUI extends Application {
 		// Display main menu, start game if that option is selected, show menus, etc.
 		loginPane = new LoginPane(accountCollection, this, primaryStage);
 		settingsMenu = new SettingsMenu(this, primaryStage);
-		mainMenu = new MainMenu(this, primaryStage, account.getUsername());
-		Scene mainMenuScene = mainMenu.getScene();
-		primaryStage.setScene(mainMenuScene);
+		//mainMenu = new MainMenu(this, primaryStage, account.getUsername());
+		pauseMenu = new PauseMenu(this, snakeGame);
+		//Scene mainMenuScene = mainMenu.getScene();
+		//primaryStage.setScene(mainMenuScene);
 
 		currentScene = new Scene(loginPane, WINDOW_WIDTH, WINDOW_HEIGHT);
 		getAccounts();
@@ -70,7 +74,7 @@ public class SnakeGUI extends Application {
 		primaryStage.close();
 
 		// Resize the stage and scene to show the full game
-		Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
+		canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, settingsMenu.getCurrentInterval(),
 				settingsMenu.getNumPellets(), gc);
@@ -91,7 +95,24 @@ public class SnakeGUI extends Application {
 
 		snakeGame.start();
 	}
-
+	
+	public void continueGame(Stage primaryStage) {
+		// Create root node to hold the Canvas
+		StackPane root = new StackPane();
+		root.getChildren().add(canvas);
+		currentScene.setRoot(root);
+		currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
+		currentScene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent key) -> {
+			if (key.getCode() == KeyCode.ESCAPE) {
+				snakeGame.stop();
+				currentScene.setRoot(pauseMenu);
+			}
+		});
+		
+		primaryStage.setScene(currentScene);
+		snakeGame.start();
+	}
+	
 	// Methods to check the state of SnakeGame and display corresponding menus
 
 	public void setWindowSize(int tileWidth, int tileHeight) {

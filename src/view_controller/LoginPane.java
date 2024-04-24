@@ -137,9 +137,16 @@ public class LoginPane extends VBox {
 	            if (account.login(password)) {
 	                usernameField.clear();
 	                passwordField.clear();
+<<<<<<< HEAD
 	                currentAccount = account;
 	                // Initialize MainMenu here after a successful login
 	                mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
+=======
+	                currentAccount = accountCollection.getAccount(account.getUsername());
+	                
+	        		mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
+	                
+>>>>>>> 5323952469749dfda0936931ff906ea8a9ef3206
 	                switchToMainMenu();
 	                return;
 	            } else {
