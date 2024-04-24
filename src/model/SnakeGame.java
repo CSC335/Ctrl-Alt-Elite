@@ -140,10 +140,14 @@ public class SnakeGame {
 	 * Displays the game over screen. //To Do: Sameeka
 	 */
 	public void displayGameOverScreen() {
-		String gameOverText = "Game Over";
+	    String gameOverText = "Game Over";
 	    String restartText = "Press 'R' to Restart";
+
+	    CustomFont gameOverFont = new CustomFont(48);
+	    CustomFont restartFont = new CustomFont(24);
+
 	    gc.setFill(Color.PURPLE);
-	    gc.setFont(Font.font("Press Start 2P", FontWeight.BOLD, 48));
+	    gc.setFont(gameOverFont.getCustomFont());
 
 	    javafx.scene.text.Text text = new javafx.scene.text.Text(gameOverText);
 	    text.setFont(gc.getFont());
@@ -157,7 +161,7 @@ public class SnakeGame {
 	    gc.fillText(gameOverText, x, y);
 	    gc.setEffect(null);
 
-	    gc.setFont(Font.font("Press Start 2P", FontWeight.BOLD, 24));
+	    gc.setFont(restartFont.getCustomFont());
 	    text = new javafx.scene.text.Text(restartText);
 	    text.setFont(gc.getFont());
 	    textWidth = text.getBoundsInLocal().getWidth();
@@ -165,6 +169,7 @@ public class SnakeGame {
 	    x = (board.getWidth() - textWidth) / 2;
 	    gc.fillText(restartText, x, y);
 	}
+
 	/**
 	 * Change the direction of the Snake based on user inputted key presses
 	 *
