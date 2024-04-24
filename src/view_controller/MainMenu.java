@@ -29,13 +29,11 @@ public class MainMenu extends VBox {
 
     public MainMenu(SnakeGUI snakeGUI) {
         buttonFont = new CustomFont(BUTTON_FONT_SIZE);
-        initializeComponents(snakeGUI);
-        layoutComponents();
     }
 
     
 
-    private void initializeComponents(SnakeGUI snakeGUI) {
+    public void initializeComponents(SnakeGUI snakeGUI) {
         SnakeAccount account = snakeGUI.getLoginPane().getCurrentAccount();
         startGameButton = new Button("Start Game");
         startGameButton.setOnAction(event -> startGame(snakeGUI));
@@ -59,7 +57,7 @@ public class MainMenu extends VBox {
         highScoreLabel.setTextFill(Color.WHITE);
     }
 
-    private void layoutComponents() {
+    public void layoutComponents() {
         this.getChildren().addAll(welcomeLabel, highScoreLabel, startGameButton, settingsButton); // Include high score label
         this.setAlignment(Pos.CENTER);
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));

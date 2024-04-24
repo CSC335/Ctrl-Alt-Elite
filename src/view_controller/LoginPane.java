@@ -62,6 +62,8 @@ public class LoginPane extends VBox {
 	}
 
 	private void switchToMainMenu() {
+		snakeGUI.getMainMenu().initializeComponents(snakeGUI);
+		snakeGUI.getMainMenu().layoutComponents();
 		snakeGUI.setSceneRoot(snakeGUI.getMainMenu());
 	}
 
@@ -135,8 +137,6 @@ public class LoginPane extends VBox {
 	                usernameField.clear();
 	                passwordField.clear();
 	                currentAccount = account;
-	                // Initialize MainMenu here after a successful login
-          			mainMenu = new MainMenu(snakeGUI);
 	                switchToMainMenu();
 	                return;
 	            } else {
@@ -186,7 +186,6 @@ public class LoginPane extends VBox {
 
 	private void signInAsGuest() {
 		currentAccount = accountCollection.getAccount("Guest");
-		mainMenu = new MainMenu(snakeGUI);
 		switchToMainMenu();
 	}
 
