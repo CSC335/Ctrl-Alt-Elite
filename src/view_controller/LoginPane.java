@@ -1,7 +1,5 @@
 package view_controller;
 
-import java.util.List;
-
 /**
  * LoginPane snake class
  *
@@ -10,8 +8,6 @@ import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;

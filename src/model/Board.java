@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import model.Snake.Direction;
 
 /**
  * Represents the game board of a game of Snake

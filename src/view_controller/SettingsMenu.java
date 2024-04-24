@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import model.CustomFont;
 
 public class SettingsMenu extends VBox {
