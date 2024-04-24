@@ -62,12 +62,8 @@ public class LoginPane extends VBox {
 	}
 
 	private void switchToMainMenu() {
-		// TODO: change this to set the currentScene of SnakeGUI to the MainMenu
-		Scene mainMenuScene = mainMenu.getScene();
-		Stage loginStage = (Stage) getScene().getWindow();
-		loginStage.setScene(mainMenuScene);
+		snakeGUI.setSceneRoot(snakeGUI.getMainMenu());
 	}
-
 
 
 	private void initializeComponents() {
@@ -99,8 +95,8 @@ public class LoginPane extends VBox {
 
 		loginButton.setOnAction(e -> login());
 		createAccountButton.setOnAction(e -> addNewAccount());
-		skipButton1.setOnAction(e -> skipToGame());
-		skipButton2.setOnAction(e -> skipToGame());
+		skipButton1.setOnAction(e -> signInAsGuest());
+		skipButton2.setOnAction(e -> signInAsGuest());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -138,9 +134,9 @@ public class LoginPane extends VBox {
 	            if (account.login(password)) {
 	                usernameField.clear();
 	                passwordField.clear();
-          currentAccount = account;
+	                currentAccount = account;
 	                // Initialize MainMenu here after a successful login
-	                mainMenu = new MainMenu(snakeGUI, currentAccount.getUsername());
+          			mainMenu = new MainMenu(snakeGUI);
 	                switchToMainMenu();
 	                return;
 	            } else {
@@ -188,11 +184,10 @@ public class LoginPane extends VBox {
 		button.setBackground(background);
 	}
 
-	private void skipToGame() {
-		Stage loginStage = (Stage) getScene().getWindow();
-		loginStage.close();
-
-		snakeGUI.startGame();
+	private void signInAsGuest() {
+		currentAccount = accountCollection.getAccount("Guest");
+		mainMenu = new MainMenu(snakeGUI);
+		switchToMainMenu();
 	}
 
 }

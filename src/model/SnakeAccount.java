@@ -17,6 +17,7 @@ public class SnakeAccount implements Serializable {
 	public SnakeAccount(String username, String password) {
 		this.username = username;
 		this.password = password;
+		this.highScore = 0;
 	}
 
 	public String getUsername() {

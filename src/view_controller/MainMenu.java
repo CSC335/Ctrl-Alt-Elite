@@ -27,18 +27,16 @@ public class MainMenu extends VBox {
     private Label highScoreLabel; 
     private CustomFont buttonFont;
 
-    public MainMenu(SnakeGUI snakeGUI, String username) {
+    public MainMenu(SnakeGUI snakeGUI) {
         buttonFont = new CustomFont(BUTTON_FONT_SIZE);
-        if (username == null) {
-            username = "Guest";
-        }
-        initializeComponents(snakeGUI, username);
+        initializeComponents(snakeGUI);
         layoutComponents();
     }
 
     
 
-    private void initializeComponents(SnakeGUI snakeGUI, String username) {
+    private void initializeComponents(SnakeGUI snakeGUI) {
+        SnakeAccount account = snakeGUI.getLoginPane().getCurrentAccount();
         startGameButton = new Button("Start Game");
         startGameButton.setOnAction(event -> startGame(snakeGUI));
         startGameButton.setFont(buttonFont.getCustomFont());
@@ -51,18 +49,14 @@ public class MainMenu extends VBox {
         settingsButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         settingsButton.setTextFill(Color.WHITE);
 
-        welcomeLabel = new Label("Welcome, " + username + "!");
+        welcomeLabel = new Label("Welcome, " + account.getUsername() + "!");
         welcomeLabel.setFont(buttonFont.getCustomFont());
         welcomeLabel.setTextFill(Color.WHITE);
 
-      
-        SnakeAccountCollection accountCollection = new SnakeAccountCollection();
-        SnakeAccount account = accountCollection.getAccount(username);
-        if (account != null) {
-            highScoreLabel = new Label("Overall High Score: " + account.getHighScore());
-            highScoreLabel.setFont(buttonFont.getCustomFont());
-            highScoreLabel.setTextFill(Color.WHITE);
-        }
+
+        highScoreLabel = new Label("Overall High Score: " + account.getHighScore());
+        highScoreLabel.setFont(buttonFont.getCustomFont());
+        highScoreLabel.setTextFill(Color.WHITE);
     }
 
     private void layoutComponents() {
@@ -77,9 +71,6 @@ public class MainMenu extends VBox {
     }
 
     private void openSettings(SnakeGUI snakeGUI) {
-        //TODO: change this to set the currentScene of SnakeGUI to the SettingsMenu
-        //SettingsMenu settingsMenu = new SettingsMenu(snakeGUI);
-        //Scene settingsScene = new Scene(settingsMenu, 400, 400);
-        // stage.setScene(settingsScene);
+        snakeGUI.setSceneRoot(snakeGUI.getSettingsMenu());
     }
 }

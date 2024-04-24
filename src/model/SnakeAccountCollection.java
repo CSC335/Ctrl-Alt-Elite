@@ -23,6 +23,7 @@ public class SnakeAccountCollection implements Serializable {
 
 	public SnakeAccountCollection() {
 		accounts = new ArrayList<>();
+		addAccount(new SnakeAccount("Guest", ""));
 		readOverallHighScore();
 	}
 
@@ -71,7 +72,8 @@ public class SnakeAccountCollection implements Serializable {
 
 	public void readState() {
 		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream("jukebox_accounts.ser"))) {
-			accounts = (List<SnakeAccount>) inFile.readObject();
+			for (SnakeAccount account : (List<SnakeAccount>) inFile.readObject())
+				accounts.add(account);
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
