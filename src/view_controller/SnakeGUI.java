@@ -1,7 +1,6 @@
 package view_controller;
 
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,9 +8,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.SnakeAccount;
 import model.SnakeAccountCollection;
@@ -40,6 +38,7 @@ public class SnakeGUI extends Application {
 	private SettingsMenu settingsMenu;
 	private PauseMenu pauseMenu;
 	private MainMenu mainMenu;
+	private Stage mainStage;
 
 	private SnakeAccountCollection accountCollection;
 
@@ -53,7 +52,7 @@ public class SnakeGUI extends Application {
 		accountCollection = new SnakeAccountCollection();
 		// Display main menu, start game if that option is selected, show menus, etc.
 		loginPane = new LoginPane(accountCollection, this, primaryStage);
-		settingsMenu = new SettingsMenu(this, primaryStage);
+		settingsMenu = new SettingsMenu(this);
 		//mainMenu = new MainMenu(this, primaryStage, account.getUsername());
 		pauseMenu = new PauseMenu(this, snakeGame);
 		//Scene mainMenuScene = mainMenu.getScene();
@@ -64,14 +63,16 @@ public class SnakeGUI extends Application {
 
 		primaryStage.setTitle("Snake Game");
 		primaryStage.setScene(currentScene);
-		primaryStage.show();
-		primaryStage.setResizable(false);
 
-		setOnCloseRequest(primaryStage);
+		mainStage = primaryStage;
+		mainStage.show();
+		mainStage.setResizable(false);
+
+		setOnCloseRequest(mainStage);
 	}
 
-	public void startGame(Stage primaryStage) {
-		primaryStage.close();
+	public void startGame() {
+		mainStage.close();
 
 		// Resize the stage and scene to show the full game
 		canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -84,36 +85,49 @@ public class SnakeGUI extends Application {
 		root.getChildren().add(canvas);
 		currentScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
+		currentScene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent key) -> {
+			if (key.getCode() == KeyCode.ESCAPE) {
+				if (currentScene.getRoot().equals(pauseMenu)) {
+					continueGame();
+				} else {
+					snakeGame.stop();
+					currentScene.setRoot(pauseMenu);
+				}
+			}
+		});
 
 		// Re-initialize the Stage
-		primaryStage = new Stage();
-		primaryStage.setTitle("Snake Game");
-		primaryStage.setScene(currentScene);
-		primaryStage.setResizable(false);
-		primaryStage.show();
-		setOnCloseRequest(primaryStage);
+		mainStage = new Stage();
+		mainStage.setTitle("Snake Game");
+		mainStage.setScene(currentScene);
+		mainStage.setResizable(false);
+		mainStage.show();
+		setOnCloseRequest(mainStage);
 
 		snakeGame.start();
 	}
 	
-	public void continueGame(Stage primaryStage) {
+	public void continueGame() {
 		// Create root node to hold the Canvas
 		StackPane root = new StackPane();
 		root.getChildren().add(canvas);
 		currentScene.setRoot(root);
 		currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
-		currentScene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent key) -> {
-			if (key.getCode() == KeyCode.ESCAPE) {
-				snakeGame.stop();
-				currentScene.setRoot(pauseMenu);
-			}
-		});
 		
-		primaryStage.setScene(currentScene);
+		mainStage.setScene(currentScene);
 		snakeGame.start();
 	}
-	
+
 	// Methods to check the state of SnakeGame and display corresponding menus
+
+	/**
+	 * Set the current scene's root to a given menu
+	 *
+	 * @param pane A pane object representing one of the menus
+	 */
+	public void setSceneRoot(Pane pane) {
+		currentScene.setRoot(pane);
+	}
 
 	public void setWindowSize(int tileWidth, int tileHeight) {
 		WINDOW_WIDTH = tileWidth * TILE_SIZE;
@@ -172,6 +186,22 @@ public class SnakeGUI extends Application {
 		}
 	}
 	
-	
+	public SettingsMenu getSettingsMenu() {
+		return settingsMenu;
+	}
 
+	public MainMenu getMainMenu() {
+		if (mainMenu == null) {
+			mainMenu = new MainMenu(this, account.getUsername());
+		}
+		return mainMenu;
+	}
+
+	public LoginPane getLoginPane() {
+		return loginPane;
+	}
+
+	public PauseMenu getPauseMenu() {
+		return pauseMenu;
+	}
 }

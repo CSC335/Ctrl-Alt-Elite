@@ -62,12 +62,13 @@ public class LoginPane extends VBox {
 	}
 
 	private void switchToMainMenu() {
+		// TODO: change this to set the currentScene of SnakeGUI to the MainMenu
 		Scene mainMenuScene = mainMenu.getScene();
 		Stage loginStage = (Stage) getScene().getWindow();
 		loginStage.setScene(mainMenuScene);
 	}
-	
-	
+
+
 
 	private void initializeComponents() {
 		welcomeLabel = new Label("Snake");
@@ -139,7 +140,7 @@ public class LoginPane extends VBox {
 	                passwordField.clear();
           currentAccount = account;
 	                // Initialize MainMenu here after a successful login
-	                mainMenu = new MainMenu(snakeGUI, stage, currentAccount.getUsername());
+	                mainMenu = new MainMenu(snakeGUI, currentAccount.getUsername());
 	                switchToMainMenu();
 	                return;
 	            } else {
@@ -191,7 +192,7 @@ public class LoginPane extends VBox {
 		Stage loginStage = (Stage) getScene().getWindow();
 		loginStage.close();
 
-		snakeGUI.startGame(new Stage());
+		snakeGUI.startGame();
 	}
 
 }

@@ -25,13 +25,11 @@ public class SettingsMenu extends VBox {
     private Background background;
     
     private SnakeGUI snakeGUI;
-    private Stage stage;
     private long currentInterval;
     private int numPellets;
     
-    public SettingsMenu(SnakeGUI snakeGUI, Stage stage) {
+    public SettingsMenu(SnakeGUI snakeGUI) {
         this.snakeGUI = snakeGUI;
-        this.stage = stage;
         currentInterval = MEDIUM_INTERVAL;
         numPellets = 1;
         settingsFont = new CustomFont(12);
@@ -97,7 +95,7 @@ public class SettingsMenu extends VBox {
                 (observable, oldValue, newValue) -> snakeGUI.setWindowSize(newValue.intValue(), newValue.intValue()));
         
         backButton.setOnAction(event -> {
-            snakeGUI.startGame(stage);
+            snakeGUI.startGame();
         });
     }
     

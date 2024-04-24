@@ -41,9 +41,7 @@ public class PauseMenu extends VBox {
         setFont(quitToMenu);
         
         continueGame.setOnAction(event-> {
-            Stage currStage = (Stage) getScene().getWindow();
-            
-            snakeGUI.continueGame(currStage);
+            snakeGUI.continueGame();
         });
         
         quitToMenu.setOnAction(event -> {

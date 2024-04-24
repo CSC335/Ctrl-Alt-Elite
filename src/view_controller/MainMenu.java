@@ -27,26 +27,26 @@ public class MainMenu extends VBox {
     private Label highScoreLabel; 
     private CustomFont buttonFont;
 
-    public MainMenu(SnakeGUI snakeGUI, Stage stage, String username) {
+    public MainMenu(SnakeGUI snakeGUI, String username) {
         buttonFont = new CustomFont(BUTTON_FONT_SIZE);
         if (username == null) {
             username = "Guest";
         }
-        initializeComponents(snakeGUI, stage, username);
+        initializeComponents(snakeGUI, username);
         layoutComponents();
     }
 
     
 
-    private void initializeComponents(SnakeGUI snakeGUI, Stage stage, String username) {
+    private void initializeComponents(SnakeGUI snakeGUI, String username) {
         startGameButton = new Button("Start Game");
-        startGameButton.setOnAction(event -> startGame(snakeGUI, stage));
+        startGameButton.setOnAction(event -> startGame(snakeGUI));
         startGameButton.setFont(buttonFont.getCustomFont());
         startGameButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         startGameButton.setTextFill(Color.WHITE);
 
         settingsButton = new Button("Settings");
-        settingsButton.setOnAction(event -> openSettings(snakeGUI, stage));
+        settingsButton.setOnAction(event -> openSettings(snakeGUI));
         settingsButton.setFont(buttonFont.getCustomFont());
         settingsButton.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         settingsButton.setTextFill(Color.WHITE);
@@ -72,13 +72,14 @@ public class MainMenu extends VBox {
         this.setSpacing(20);
     }
 
-    private void startGame(SnakeGUI snakeGUI, Stage stage) {
-        snakeGUI.startGame(stage);
+    private void startGame(SnakeGUI snakeGUI) {
+        snakeGUI.startGame();
     }
 
-    private void openSettings(SnakeGUI snakeGUI, Stage stage) {
-        SettingsMenu settingsMenu = new SettingsMenu(snakeGUI, stage);
-        Scene settingsScene = new Scene(settingsMenu, 400, 400);
-        stage.setScene(settingsScene);
+    private void openSettings(SnakeGUI snakeGUI) {
+        //TODO: change this to set the currentScene of SnakeGUI to the SettingsMenu
+        //SettingsMenu settingsMenu = new SettingsMenu(snakeGUI);
+        //Scene settingsScene = new Scene(settingsMenu, 400, 400);
+        // stage.setScene(settingsScene);
     }
 }
