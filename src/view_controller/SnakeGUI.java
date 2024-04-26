@@ -40,6 +40,7 @@ public class SnakeGUI extends Application {
 	private PauseMenu pauseMenu;
 	private MainMenu mainMenu;
 	private Stage mainStage;
+    private Scene mainMenuScene; 
 
 	private SnakeAccountCollection accountCollection;
 
@@ -70,6 +71,10 @@ public class SnakeGUI extends Application {
 
 		setOnCloseRequest(mainStage);
 	}
+	
+	public SnakeGame getSnakeGame() {
+        return snakeGame; // This returns the current instance of SnakeGame.
+    }
 
 	public void startGame() {
 		mainStage.close();
@@ -178,6 +183,25 @@ public class SnakeGUI extends Application {
 				}	
 		});}
 	}
+	
+	public void restartGame() {
+        mainStage.close();
+        
+        resetGameLogic();
+
+        showInitialMenu();
+    }
+
+	private void resetGameLogic() {
+        snakeGame = null; 
+    }
+	
+	private void showInitialMenu() {
+        mainMenu = new MainMenu(this);
+        Scene mainMenuScene = mainMenu.getScene();
+        mainStage.setScene(mainMenuScene);
+        mainStage.show();
+    }
 
 	private void getAccounts() {
 		try {
@@ -204,5 +228,29 @@ public class SnakeGUI extends Application {
 
 	public PauseMenu getPauseMenu() {
 		return pauseMenu;
+	}
+
+	public int getCOLUMNS() {
+		return COLUMNS;
+	}
+
+	public void setCOLUMNS(int cOLUMNS) {
+		COLUMNS = cOLUMNS;
+	}
+
+	public SnakeAccount getAccount() {
+		return account;
+	}
+
+	public void setAccount(SnakeAccount account) {
+		this.account = account;
+	}
+
+	public int getROWS() {
+		return ROWS;
+	}
+
+	public void setROWS(int rOWS) {
+		ROWS = rOWS;
 	}
 }
