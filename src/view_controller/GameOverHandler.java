@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import model.CustomFont;
 import model.SnakeGame;
 
 import java.io.FileInputStream;
@@ -20,8 +22,10 @@ import java.io.IOException;
 public class GameOverHandler extends VBox {
     
     private SnakeGame theGame;
+    private SnakeGUI snakeGUI;
     private Label gameOverLabel, scoreLabel, highScoreLabel;
     private Button restart, quit;
+    private Button leaderboardButton;
     
     /**
      * Creates a new GameOverHandler object
@@ -32,9 +36,12 @@ public class GameOverHandler extends VBox {
         this.theGame = theGame;
         intializeComponents();
         layoutGUI();
+
     }
-    
-    /**
+
+
+
+ /**
      * Initializes all components of the Scene with custom fonts
      */
     private void intializeComponents() {
@@ -43,6 +50,14 @@ public class GameOverHandler extends VBox {
         highScoreLabel = new Label("High Score: " + theGame.getScoreManager().getHighScore());
         restart = new Button("Restart");
         quit = new Button("Quit");
+        
+        leaderboardButton = new Button("View Leaderboard"); 
+        leaderboardButton.setFont(new CustomFont(15).getCustomFont());
+        leaderboardButton.setOnAction(e -> {
+            LeaderBoard lb = new LeaderBoard(snakeGUI.getAccountCollection());
+            lb.display(new Stage());
+        });
+
         
         // Create a new custom font for the Game Over text
         FileInputStream fontInputStream;
