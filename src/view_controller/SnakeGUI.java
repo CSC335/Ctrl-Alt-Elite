@@ -187,6 +187,10 @@ public class SnakeGUI extends Application {
 		}
 	}
 	
+	public SnakeAccountCollection getAccountCollection() {
+		return accountCollection;
+	}
+	
 	public SettingsMenu getSettingsMenu() {
 		return settingsMenu;
 	}

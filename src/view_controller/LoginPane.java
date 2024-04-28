@@ -1,5 +1,7 @@
 package view_controller;
 
+import java.util.List;
+
 /**
  * LoginPane snake class
  *
@@ -8,6 +10,7 @@ package view_controller;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -126,6 +129,11 @@ public class LoginPane extends VBox {
 	private void login() {
 	    String username = usernameField.getText();
 	    String password = passwordField.getText();
+	    
+	    if (username.isBlank() || password.isBlank()) {
+	    	statusLabel.setText("Must login first");
+	    	return;
+	    }
 
 	    for (SnakeAccount account : accountCollection.getAccounts()) {
 	        if (account.getUsername().equals(username)) {
@@ -141,14 +149,14 @@ public class LoginPane extends VBox {
 	            }
 	        }
 	    }
-
-	    statusLabel.setText("Account not found or invalid credentials");
+	    statusLabel.setText("Invalid username");
 	}
 
 
 	private void addNewAccount() {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
+		
 
 		for (SnakeAccount account : accountCollection.getAccounts()) {
 			if (account.getUsername().equals(username)) {
@@ -156,12 +164,16 @@ public class LoginPane extends VBox {
 				return;
 			}
 		}
-		SnakeAccount newAccount = new SnakeAccount(username, password);
-		accountCollection.addAccount(newAccount);
-		statusLabel.setText("Account created");
-
-		usernameField.clear();
-		passwordField.clear();
+		
+		if (!username.isEmpty() && !password.isEmpty()) {
+			SnakeAccount newAccount = new SnakeAccount(username, password);
+			accountCollection.addAccount(newAccount);
+			statusLabel.setText("Account created");
+	
+			usernameField.clear();
+			passwordField.clear();
+		}
+		statusLabel.setText("Must add username/password");
 	}
 
 	public SnakeAccount getCurrentAccount() {

@@ -72,8 +72,10 @@ public class SnakeAccountCollection implements Serializable {
 
 	public void readState() {
 		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream("jukebox_accounts.ser"))) {
-			for (SnakeAccount account : (List<SnakeAccount>) inFile.readObject())
-				accounts.add(account);
+			for (SnakeAccount account : (List<SnakeAccount>) inFile.readObject()) {
+				if (!account.getUsername().isEmpty())
+	                accounts.add(account);
+			}
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
