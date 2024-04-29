@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 /**
  * Represents a Food Pellet to be eaten by a player in a game of Snake
  *
- * @author Kayla Pierson
+ * @author Kayla Pierson, Brendan Bamberg
  */
 
 public class FoodPellet {
@@ -48,6 +48,7 @@ public class FoodPellet {
      *
      * @param boardWidth  An integer representing the width of the board
      * @param boardHeight An integer representing the height of the board
+     * @param canPowerUp A boolean representing whether the FoodPellet can be a power up
      */
     public void spawn(int boardWidth, int boardHeight, boolean canPowerUp) {
         Random random = new Random();
@@ -90,6 +91,8 @@ public class FoodPellet {
      *
      * @param boardWidth  An integer representing the width of the board
      * @param boardHeight An integer representing the height of the board
+     * @param canPowerUp A boolean representing whether the FoodPellet can be a power up
+     * @param snake A Snake object representing the player
      */
     public void respawn(int boardWidth, int boardHeight, boolean canPowerUp, Snake snake) {
         Tile oldTile = new Tile(currentTile.getTileX(), currentTile.getTileY());

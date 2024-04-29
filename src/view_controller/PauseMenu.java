@@ -9,6 +9,12 @@ import javafx.scene.paint.Color;
 import model.CustomFont;
 import model.SnakeGame;
 
+/**
+ * A scene that shows the Pause Menu
+ *
+ * @author Brendan Bamberg
+ */
+
 public class PauseMenu extends VBox {
 
     private Label pauseLabel, confirmLabel;
@@ -19,6 +25,12 @@ public class PauseMenu extends VBox {
     private CustomFont labelFont, labelFontTwo, buttonFont;
     private Background background;
     
+    /**
+     * Initializes a new PauseMenu to be displayed during a game of Snake
+     *
+     * @param snakeGUI The main GUI that shows the game
+     * @param theGame A SnakeGame object representing the current game
+     */
     public PauseMenu(SnakeGUI snakeGUI, SnakeGame theGame) {
         labelFont = new CustomFont(40);
         labelFontTwo = new CustomFont(24);
@@ -31,6 +43,9 @@ public class PauseMenu extends VBox {
         layoutGUI();
     }
     
+    /**
+     * Initializes the components of the PauseMenu and adds listeners to some components
+     */
     private void initializeComponents() {
         pauseLabel = new Label("Pause");
         confirmLabel = new Label("Are you sure?");
@@ -53,7 +68,6 @@ public class PauseMenu extends VBox {
         });
         
         quitToMenu.setOnAction(event -> {
-            // reset the SnakeGUI and game, maybe pull up an alert beforehand
             switchLayout(1);
         });
 
@@ -67,13 +81,21 @@ public class PauseMenu extends VBox {
         });
     }
     
+    /**
+     * Lays out the components of the PauseMeny
+     */
     private void layoutGUI() {
         this.getChildren().addAll(pauseLabel, spacingButton(), continueGame, quitToMenu);
         this.setAlignment(Pos.CENTER);
         this.setBackground(background);
         this.setSpacing(20);
     }
-
+    
+    /**
+     * Switches between different layouts to show either the main pause menu or the confirmation to quit
+     *
+     * @param layout An integer representing which layout should be shown
+     */
     private void switchLayout(int layout) {
         this.getChildren().clear();
         if (layout == 0) {
@@ -93,7 +115,12 @@ public class PauseMenu extends VBox {
             this.setSpacing(20);
         }
     }
-
+    
+    /**
+     * A function that returns an empty button used to space components of the menu
+     *
+     * @return An empty Button object
+     */
     private Button spacingButton() {
         Button spacingButton = new Button();
         setFont(spacingButton);
@@ -101,12 +128,22 @@ public class PauseMenu extends VBox {
         return spacingButton;
     }
     
+    /**
+     * Sets the font style of a label to a custom font and background
+     *
+     * @param label The desired Label to be adjusted
+     */
     private void setFont(Label label) {
         label.setFont(labelFont.getCustomFont());
         label.setTextFill(Color.WHITE);
         label.setBackground(background);
     }
     
+    /**
+     * Sets the font style of a button to a custom font and background
+     *
+     * @param button The desired Button to be adjusted
+     */
     private void setFont(Button button) {
         button.setFont(buttonFont.getCustomFont());
         button.setTextFill(Color.WHITE);

@@ -111,6 +111,11 @@ public class Snake {
         body.add(newLast);
     }
     
+    /**
+     * Set whether the snake is powered up, start a timer if it is
+     *
+     * @param newSate A boolean representing whether the snake is now powered up or not
+     */
     public void setPoweredUp(boolean newSate) {
         isPoweredUp = newSate;
         
@@ -129,6 +134,11 @@ public class Snake {
         }
     }
     
+    /**
+     * Get whether the snake has a power up
+     *
+     * @return True if the snake is powered up, False otherwise
+     */
     public boolean isPoweredUp() {
         return isPoweredUp;
     }

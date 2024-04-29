@@ -19,7 +19,7 @@ import model.SnakeGame;
 /**
  * A JavaFX GUI that represents a game of Snake
  *
- * @author Sameeka Maroli
+ * @author Sameeka Maroli, Brendan Bamberg, Kayla Pierson, Vannela Chatla
  */
 
 public class SnakeGUI extends Application {
@@ -70,7 +70,10 @@ public class SnakeGUI extends Application {
 
 		setOnCloseRequest(mainStage);
 	}
-
+	
+	/**
+	 * Starts the game with the current settings
+	 */
 	public void startGame() {
 		mainStage.close();
 
@@ -108,6 +111,9 @@ public class SnakeGUI extends Application {
 		snakeGame.start();
 	}
 	
+	/**
+	 * Continue the game and set the scene back to the game
+	 */
 	public void continueGame() {
 		// Create root node to hold the Canvas
 		StackPane root = new StackPane();

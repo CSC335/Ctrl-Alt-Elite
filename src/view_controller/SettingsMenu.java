@@ -9,6 +9,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.CustomFont;
 
+/**
+ * A scene that shows a settings menu and adjusts various settings of the game of Snake
+ *
+ * @author Brendan Bamberg
+ */
+
 public class SettingsMenu extends VBox {
     
     private static final long EASY_INTERVAL = 100_000_000;
@@ -27,6 +33,11 @@ public class SettingsMenu extends VBox {
     private long currentInterval;
     private int numPellets;
     
+    /**
+     * Initializes a new SettingsMenu
+     *
+     * @param snakeGUI The main GUI that shows the game
+     */
     public SettingsMenu(SnakeGUI snakeGUI) {
         this.snakeGUI = snakeGUI;
         currentInterval = MEDIUM_INTERVAL;
@@ -41,6 +52,9 @@ public class SettingsMenu extends VBox {
         layoutGUI();
     }
     
+    /**
+     * Initializes the components of the menu
+     */
     private void initializeElements() {
         headerLabel = new Label("Settings");
         difficultyLabel = new Label("Difficulty");
@@ -81,6 +95,9 @@ public class SettingsMenu extends VBox {
         setFont(backButton);
     }
     
+    /**
+     * Adds listeners to the buttons and slider of the menu
+     */
     private void addListeners() {
         easy.setOnAction(new DifficultyHandler());
         medium.setOnAction(new DifficultyHandler());
@@ -98,18 +115,32 @@ public class SettingsMenu extends VBox {
         });
     }
     
+    /**
+     * Sets the font style of a label to a custom font and background
+     *
+     * @param label The desired Label to be adjusted
+     * @param customFont The desired font to be applied (different sizes)
+     */
     private void setFont(Label label, CustomFont customFont) {
         label.setFont(customFont.getCustomFont());
         label.setTextFill(Color.WHITE);
         label.setBackground(background);
     }
     
+    /**
+     * Sets the font style of a label to a custom font and background
+     *
+     * @param button The desired Label to be adjusted
+     */
     private void setFont(Button button) {
         button.setFont(settingsFont.getCustomFont());
         button.setTextFill(Color.WHITE);
         button.setBackground(background);
     }
     
+    /**
+     * Lays out the components of the menu
+     */
     private void layoutGUI() {
         HBox difficultySettings = new HBox();
         difficultySettings.getChildren().addAll(easy, medium, hard, nightmare);
@@ -127,6 +158,11 @@ public class SettingsMenu extends VBox {
         this.setSpacing(20);
     }
     
+    /**
+     * A function that returns an empty button used to space components of the menu
+     *
+     * @return An empty Button object
+     */
     private Button spacingButton() {
         Button spacingButton = new Button();
         setFont(spacingButton);
@@ -134,16 +170,34 @@ public class SettingsMenu extends VBox {
         return spacingButton;
     }
     
+    /**
+     * Gets the current time interval to refresh the game
+     *
+     * @return A long that represents the refresh rate of the game loop
+     */
     public long getCurrentInterval() {
         return currentInterval;
     }
     
+    /**
+     * Gets the number of FoodPellets to be spawned based on the current setting
+     *
+     * @return An integer that represents the number of FoodPellets to be spawned
+     */
     public int getNumPellets() {
         return numPellets;
     }
     
+    /**
+     * A class that handles changing the difficulty (speed) of the game
+     */
     private class DifficultyHandler implements EventHandler<ActionEvent> {
         
+        /**
+         * Changes the button colors and current interval based on the button pressed
+         *
+         * @param actionEvent An ActionEvent that represents a button being selected
+         */
         @Override
         public void handle(ActionEvent actionEvent) {
             Button source = (Button) actionEvent.getSource();
@@ -167,8 +221,16 @@ public class SettingsMenu extends VBox {
         
     }
     
+    /**
+     * A class that handles which game mode will be played
+     */
     private class ModeHandler implements EventHandler<ActionEvent> {
         
+        /**
+         * Changes the button colors, current interval, and number of pellets based on the button pressed
+         *
+         * @param actionEvent An ActionEvent that represents a button being selected
+         */
         @Override
         public void handle(ActionEvent actionEvent) {
             Button source = (Button) actionEvent.getSource();

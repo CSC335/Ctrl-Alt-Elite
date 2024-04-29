@@ -122,12 +122,6 @@ public class SnakeGame {
     }
     
     /**
-     * Check if the Snake has collided with itself or the walls of the board and
-     * activate a game over
-     */
-    //
-    
-    /**
      * Draw the entire board
      */
     private void render() { //To Do: Sameeka
@@ -227,10 +221,20 @@ public class SnakeGame {
         return scoreManager;
     }
     
+    /**
+     * Get the snake of the game
+     *
+     * @return A Snake object that represents the player
+     */
     public Snake getSnake() {
         return this.snake;
     }
     
+    /**
+     * Get the board of the game
+     *
+     * @return A Board object that represents the NxN tile board of the game
+     */
     public Object getBoard() {
         return this.board;
     }
