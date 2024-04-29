@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -18,10 +19,13 @@ public class Snake {
     private Direction direction;
     private Color color;
     
+    private boolean isPoweredUp;
+    
     /**
      * Create a new Snake object with default location and direction
      */
     public Snake() {
+        isPoweredUp = false;
         body = new ArrayList<>();
         body.add(new Tile(10, 10));
         direction = Direction.RIGHT;
@@ -35,6 +39,7 @@ public class Snake {
      * @param color The desired color of the Snake
      */
     public Snake(int x, int y, Color color) {
+        isPoweredUp = false;
         this.body = new ArrayList<>();
         body.add(new Tile(x, y));
         this.color = color;
@@ -56,6 +61,19 @@ public class Snake {
      * @param gc A GraphicsContext object used to draw to the screen
      */
     public void draw(GraphicsContext gc) {
+        if (isPoweredUp) {
+            gc.setGlobalAlpha(0.2);
+            gc.setFill(Color.GOLD);
+            Tile head = body.get(0);
+            
+            for (int i = -2; i <= 2; i++) {
+                for (int j = -2; j <= 2; j++) {
+                    gc.fillRect(head.getX() + i * TILE_SIZE, head.getY() + j * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                }
+            }
+            gc.setGlobalAlpha(1);
+        }
+        
         gc.setFill(color);
         // Draw each body segment of the snake
         for (Tile point : body) {
@@ -93,6 +111,28 @@ public class Snake {
         body.add(newLast);
     }
     
+    public void setPoweredUp(boolean newSate) {
+        isPoweredUp = newSate;
+        
+        // Set a 15-second window for the power up to be active
+        if (isPoweredUp) {
+            System.out.println("Started");
+            new Thread(() -> {
+                try {
+                    Thread.sleep(15000);
+                    System.out.println("Ended");
+                    isPoweredUp = false;
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+        }
+    }
+    
+    public boolean isPoweredUp() {
+        return isPoweredUp;
+    }
+    
     /**
      * Set the current direction of the Snake based off user input
      *
@@ -101,7 +141,7 @@ public class Snake {
     public void setDirection(Direction direction) {
         if (this.direction == Direction.UP && direction == Direction.DOWN ||
                 this.direction == Direction.DOWN && direction == Direction.UP ||
-                this.direction == Direction.DOWN && direction == Direction.UP||
+                this.direction == Direction.DOWN && direction == Direction.UP ||
                 this.direction == Direction.LEFT && direction == Direction.RIGHT ||
                 this.direction == Direction.RIGHT && direction == Direction.LEFT) {
             return;

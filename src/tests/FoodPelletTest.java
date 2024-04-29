@@ -7,6 +7,7 @@ package tests;
 
 
 import model.FoodPellet;
+import model.Snake;
 import model.Tile;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,7 +42,7 @@ public class FoodPelletTest {
     public void testRespawnPellet() {
         FoodPellet foodPellet = new FoodPellet(boardWidth, boardHeight);
         Tile originalTile = new Tile(foodPellet.getCurrentTile().getTileX(), foodPellet.getCurrentTile().getTileY());
-        foodPellet.respawn(boardWidth, boardHeight);
+        foodPellet.respawn(boardWidth, boardHeight, false, new Snake());
         Tile newTile = foodPellet.getCurrentTile();
         assertFalse(foodPellet.isEaten(),
                     "Pellet should not be marked as eaten after respawning.");
