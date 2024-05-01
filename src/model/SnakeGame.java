@@ -71,10 +71,16 @@ public class SnakeGame {
         gameLoop.start();
     }
     
+	/**
+	 * Stop the game loop
+	 */
     public void stop() {
         gameLoop.stop();
     }
     
+	/**
+	 * Changes the game state to game over
+	 */
     public boolean gameOver() {
         isGameOver = true; // Set the game over flag
         stop();
@@ -82,6 +88,9 @@ public class SnakeGame {
         return true;
     }
     
+	/**
+	 * Updates to the current state of the game
+	 */
     private void update() {
         if (!isGameOver) {
             if (board.isCollision()) {

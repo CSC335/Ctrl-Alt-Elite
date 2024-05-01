@@ -27,10 +27,20 @@ public class SnakeAccountCollection implements Serializable {
 		readOverallHighScore();
 	}
 
+	/**
+	 * Retrieves the list of snake accounts
+	 *
+	 * @return accounts A list of SnakeAccounts
+	 */
 	public List<SnakeAccount> getAccounts() {
 		return accounts;
 	}
 
+	/**
+	 * Gets a SnakeAccount given its username
+	 *
+	 * @return account A single SnakeAccount
+	 */
 	public SnakeAccount getAccount(String username) {
 		for (SnakeAccount account : accounts) {
 			if (account.getUsername().equals(username)) {
@@ -40,6 +50,11 @@ public class SnakeAccountCollection implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Adds an account to the snake account collection
+	 *
+	 * @return A boolean showing whether it was successful or not
+	 */
 	public boolean addAccount(SnakeAccount account) {
 		for (SnakeAccount existingAccount : accounts) {
 			if (existingAccount.getUsername().equals(account.getUsername())) {
@@ -51,14 +66,28 @@ public class SnakeAccountCollection implements Serializable {
 		return true;
 	}
 
+	/**
+	 * Returns the overall high score 
+	 *
+	 * @return overallHighScore an int 
+	 */
 	public int getOverallHighScore() {
 		return overallHighScore;
 	}
 
+	/**
+	 * Updates the overall high score 
+	 *
+	 * @param newHighScore an int which is the new overall high score
+	 */
 	public void updateOverallHighScore(int newHighScore) {
 		overallHighScore = newHighScore;
 	}
 
+	/**
+	 * Writes the current state of the account collection to the ser file
+	 *
+	 */
 	public void writeState() {
 		try (FileOutputStream fileOut = new FileOutputStream("jukebox_accounts.ser");
 				ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
@@ -70,6 +99,10 @@ public class SnakeAccountCollection implements Serializable {
 		}
 	}
 
+	/**
+	 * Reads the current state of the account collection from ser file
+	 *
+	 */
 	public void readState() {
 		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream("jukebox_accounts.ser"))) {
 			for (SnakeAccount account : (List<SnakeAccount>) inFile.readObject()) {
@@ -81,6 +114,10 @@ public class SnakeAccountCollection implements Serializable {
 		}
 	}
 
+	/**
+	 * Reads the overall high score from ser file
+	 *
+	 */
 	private void readOverallHighScore() {
 		try (ObjectInputStream inFile = new ObjectInputStream(new FileInputStream("overall_high_score.ser"))) {
 			overallHighScore = (int) inFile.readObject();
@@ -89,6 +126,10 @@ public class SnakeAccountCollection implements Serializable {
 		}
 	}
 
+	/**
+	 * Writes the overall high score to the ser file
+	 *
+	 */
 	private void writeOverallHighScore() {
 		try (ObjectOutputStream outFile = new ObjectOutputStream(new FileOutputStream("overall_high_score.ser"))) {
 			outFile.writeObject(overallHighScore);
@@ -97,6 +138,11 @@ public class SnakeAccountCollection implements Serializable {
 		}
 	}
 
+	/**
+	 * Shows alert according to the given message
+	 *
+	 * @param message A string showing the alert message
+	 */
 	private void showAlert(String message) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Alert");

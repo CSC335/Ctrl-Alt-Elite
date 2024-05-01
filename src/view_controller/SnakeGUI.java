@@ -138,11 +138,22 @@ public class SnakeGUI extends Application {
 		currentScene.setRoot(pane);
 	}
 
+	/**
+	 * Sets the window size
+	 *
+	 * @param tileWidth an int
+	 * @param tileHeight an int
+	 */
 	public void setWindowSize(int tileWidth, int tileHeight) {
 		WINDOW_WIDTH = tileWidth * TILE_SIZE;
 		WINDOW_HEIGHT = tileHeight * TILE_SIZE;
 	}
 
+	/**
+	 * Asks if they want to save the data
+	 *
+	 * @param primaryStage the primary stage
+	 */
 	private void saveAlert(Stage primaryStage) {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Shutdown Confirmation");
@@ -163,7 +174,11 @@ public class SnakeGUI extends Application {
 		});
 	}
 
-
+	/**
+	 * Saves the data and closes the window
+	 *
+	 * @param primaryStage the primary stage
+	 */
 	private void saveDataAndClose(Stage primaryStage) {
 		if (snakeGame.getScoreManager().getCurrentScore() > accountCollection.getOverallHighScore()) {
 			accountCollection.updateOverallHighScore(snakeGame.getScoreManager().getCurrentScore());
@@ -174,6 +189,11 @@ public class SnakeGUI extends Application {
 		primaryStage.close();
 	}
 
+	/**
+	 * Sets the close request if the user closes the window
+	 *
+	 * @param primaryStage the primary stage
+	 */
 	private void setOnCloseRequest(Stage primaryStage) {
 		if (snakeGame != null) {
 			primaryStage.setOnCloseRequest(event -> {
@@ -187,6 +207,9 @@ public class SnakeGUI extends Application {
 		});}
 	}
 
+	/**
+	 * Retrieves the current account collection state
+	 */
 	private void getAccounts() {
 		try {
 			accountCollection.readState();
@@ -195,14 +218,29 @@ public class SnakeGUI extends Application {
 		}
 	}
 	
+	/**
+	 * Retrieves the account collection
+	 *
+	 * @return accountCollection a SnakeAccountCollection object
+	 */
 	public SnakeAccountCollection getAccountCollection() {
 		return accountCollection;
 	}
 	
+	/**
+	 * Returns the settings menu
+	 *
+	 * @return settingsMenu
+	 */
 	public SettingsMenu getSettingsMenu() {
 		return settingsMenu;
 	}
 
+	/**
+	 * Returns the main menu
+	 *
+	 * @return mainMenu
+	 */
 	public MainMenu getMainMenu() {
 		if (mainMenu == null) {
 			mainMenu = new MainMenu(this);
@@ -210,14 +248,29 @@ public class SnakeGUI extends Application {
 		return mainMenu;
 	}
 
+	/**
+	 * Returns the login pane
+	 *
+	 * @return loginPane
+	 */
 	public LoginPane getLoginPane() {
 		return loginPane;
 	}
 
+	/**
+	 * Returns the pause menu
+	 *
+	 * @return pauseMenu
+	 */
 	public PauseMenu getPauseMenu() {
 		return pauseMenu;
 	}
 	
+	/**
+	 * Returns the game display
+	 *
+	 * @return gameDisplay
+	 */
 	public GameDisplay getGameDisplay() {
 		return gameDisplay;
 	}

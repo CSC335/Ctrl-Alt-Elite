@@ -34,7 +34,11 @@ public class MainMenu extends VBox {
     }
 
     
-
+	/**
+	 * Initialize the components to the Main Menu
+	 *
+	 * @param snakeGUI the main GUI that shows the game
+	 */
     public void initializeComponents(SnakeGUI snakeGUI) {
         SnakeAccount account = snakeGUI.getLoginPane().getCurrentAccount();
         startGameButton = new Button("Start Game");
@@ -69,7 +73,10 @@ public class MainMenu extends VBox {
         });
     }
 
- 
+	/**
+	 * Display the components to the Main Menu
+	 *
+	 */
     public void layoutComponents() {
         this.setAlignment(Pos.CENTER);
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -79,10 +86,20 @@ public class MainMenu extends VBox {
 
     }
 
+	/**
+	 * Starts the game
+	 *
+	 * @param snakeGUI the main GUI that shows the game
+	 */
     private void startGame(SnakeGUI snakeGUI) {
         snakeGUI.startGame();
     }
 
+	/**
+	 * Opens the settings menu
+	 *
+	 * @param snakeGUI the main GUI that shows the game
+	 */
     private void openSettings(SnakeGUI snakeGUI) {
         snakeGUI.setSceneRoot(snakeGUI.getSettingsMenu());
     }

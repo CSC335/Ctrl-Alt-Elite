@@ -60,13 +60,20 @@ public class LoginPane extends VBox {
 		layoutComponents();
 	}
 
+	/**
+	 * Switches the GUI to the main menu
+	 *
+	 */
 	private void switchToMainMenu() {
 		snakeGUI.getMainMenu().initializeComponents(snakeGUI);
 		snakeGUI.getMainMenu().layoutComponents();
 		snakeGUI.setSceneRoot(snakeGUI.getMainMenu());
 	}
 
-
+	/**
+	 * Initializes the components of the LoginPane
+	 *
+	 */
 	private void initializeComponents() {
 		welcomeLabel = new Label("Snake");
 		setFont(welcomeLabel, headerFont);
@@ -100,6 +107,11 @@ public class LoginPane extends VBox {
 		skipButton2.setOnAction(e -> signInAsGuest());
 	}
 
+	
+	/**
+	 * Layouts the LoginPane components
+	 *
+	 */
 	@SuppressWarnings("unchecked")
 	private void layoutComponents() {
 		HBox loginOptions = new HBox();
@@ -126,6 +138,9 @@ public class LoginPane extends VBox {
 
 	}
 
+	/**
+	 * Logins a user after they click the login button
+	 */
 	private void login() {
 	    String username = usernameField.getText();
 	    String password = passwordField.getText();
@@ -152,7 +167,10 @@ public class LoginPane extends VBox {
 	    statusLabel.setText("Invalid username");
 	}
 
-
+	/**
+	 * Adds a new account to the account collection
+	 *
+	 */
 	private void addNewAccount() {
 		String username = usernameField.getText();
 		String password = passwordField.getText();
@@ -176,22 +194,42 @@ public class LoginPane extends VBox {
 		statusLabel.setText("Must add username/password");
 	}
 
+	/**
+	 * Retrieves the current logged in snake account
+	 *
+	 * @return currentAccount a SnakeAccount 
+	 */
 	public SnakeAccount getCurrentAccount() {
 		return currentAccount;
 	}
 
+	/**
+	 * Sets the font to a Label
+	 *
+	 * @param label The Label to change the font of
+	 * @param font A CustomFont
+	 */
 	private void setFont(Label label, CustomFont font) {
 		label.setFont(font.getCustomFont());
 		label.setTextFill(Color.WHITE);
 		label.setBackground(background);
 	}
 
+	/**
+	 * Sets the font to a Button
+	 *
+	 * @param button The Button to change the font of
+	 */
 	private void setFont(Button button) {
 		button.setFont(optionsFont.getCustomFont());
 		button.setTextFill(Color.WHITE);
 		button.setBackground(background);
 	}
 
+	/**
+	 * Signs the user into the guest account
+	 *
+	 */
 	private void signInAsGuest() {
 		currentAccount = accountCollection.getAccount("Guest");
 		switchToMainMenu();
