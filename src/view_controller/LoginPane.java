@@ -191,7 +191,8 @@ public class LoginPane extends VBox {
 			usernameField.clear();
 			passwordField.clear();
 		}
-		statusLabel.setText("Must add username/password");
+		else
+			statusLabel.setText("Must add username/password");
 	}
 
 	/**
