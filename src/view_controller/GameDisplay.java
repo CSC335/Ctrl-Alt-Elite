@@ -30,6 +30,8 @@ public class GameDisplay extends VBox {
     private CustomFont scoreFont;
     private Timeline countdown;
     
+    private int countDownValue;
+    
     /**
      * Initializes a new GameDisplay object to display the game
      *
@@ -41,6 +43,7 @@ public class GameDisplay extends VBox {
         gameCanvas = new Canvas(width, height);
         this.gc = gameCanvas.getGraphicsContext2D();
         this.snakeGame = snakeGame;
+        countDownValue = 3;
         
         initializeUI();
         createCountdown();
@@ -60,11 +63,15 @@ public class GameDisplay extends VBox {
     
     private void createCountdown() {
         countdown = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            int currentNumber = Integer.parseInt(scoreLabel.getText());
+            int currentNumber = countDownValue;
             if (currentNumber > 1) {
-                scoreLabel.setText(String.valueOf(currentNumber - 1));
+                if (currentNumber == 3)
+                    scoreLabel.setText("set...");
+                if (currentNumber == 2)
+                    scoreLabel.setText("go!");
+                countDownValue -= 1;
             } else {
-                scoreLabel.setText("");
+                scoreLabel.setText("GO!");
                 countdown.stop();  // Stop the countdown
                 snakeGame.start();  // Start the game
             }
@@ -74,7 +81,7 @@ public class GameDisplay extends VBox {
     
     public void showCountdown() {
         snakeGame.render();
-        scoreLabel.setText("3");  // Set initial countdown value
+        scoreLabel.setText("ready?");  // Set initial countdown value
         countdown.play();  // Start the countdown
     }
     
