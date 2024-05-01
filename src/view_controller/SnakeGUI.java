@@ -80,7 +80,7 @@ public class SnakeGUI extends Application {
 	public void startGame() {
 		mainStage.close();
 		
-		gameDisplay = new GameDisplay(this, WINDOW_WIDTH, WINDOW_HEIGHT + 10, snakeGame);
+		gameDisplay = new GameDisplay(this, WINDOW_WIDTH, WINDOW_HEIGHT + 40, snakeGame);
 		// Resize the stage and scene to show the full game
 		snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, settingsMenu.getCurrentInterval(),
 				settingsMenu.getNumPellets(), gameDisplay.getGraphicsContext(), this);
@@ -90,7 +90,7 @@ public class SnakeGUI extends Application {
 		if (mainMenu.getScene() != null) {
 			mainMenu.getScene().setRoot(new VBox());
 		}
-		currentScene = new Scene(gameDisplay, WINDOW_WIDTH, WINDOW_HEIGHT + 10);
+		currentScene = new Scene(gameDisplay, WINDOW_WIDTH, WINDOW_HEIGHT + 40);
 		
 		currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
 		currentScene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent key) -> {

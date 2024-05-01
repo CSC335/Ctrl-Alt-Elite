@@ -71,6 +71,9 @@ public class Board {
             pellet.draw();
         
         snake.draw(gc);
+        
+        gc.setStroke(Color.WHITE);
+        gc.strokeLine(0, 0, width, 0);
     }
     
     /**
