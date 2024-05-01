@@ -135,26 +135,10 @@ public class SnakeGame {
     /**
      * Draw the entire board
      */
-    private void render() { //To Do: Sameeka
+    public void render() { //To Do: Sameeka
         if (!isGameOver) {
             board.update();
             snakeGUI.getGameDisplay().updateScore();
-//            String scoreText = "Score: " + scoreManager.getCurrentScore();
-//            double padding = 10;
-//            Font scoreFont = Font.font("Courier New", FontWeight.EXTRA_BOLD, 36);
-//            gc.setFont(scoreFont);
-//
-//            Text text = new Text(scoreText);
-//            text.setFont(scoreFont);
-//            double textWidth = text.getBoundsInLocal().getWidth();
-//            double textY = padding + 36;
-//            double textX = board.getWidth() - textWidth - padding;
-//
-//            gc.setStroke(Color.WHITE);
-//            gc.setLineWidth(2);
-//            gc.strokeText(scoreText, textX, textY);
-//            gc.setFill(Color.RED);
-//            gc.fillText(scoreText, textX, textY);
         } else {
             displayGameOverScreen();
         }

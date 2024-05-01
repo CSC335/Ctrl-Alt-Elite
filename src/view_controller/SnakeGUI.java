@@ -109,7 +109,8 @@ public class SnakeGUI extends Application {
         mainStage.show();
         setOnCloseRequest(mainStage);
         
-        snakeGame.start();
+        gameDisplay.showCountdown();
+        //snakeGame.start();
     }
     
     /**
