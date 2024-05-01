@@ -28,7 +28,7 @@ public class SnakeGameTest {
         
         gc = canvas.getGraphicsContext2D();
         
-        snakeGame = new SnakeGame(800, 600, 75_000_000, 5, gc);
+        snakeGame = new SnakeGame(800, 600, 75_000_000, 5, gc, null);
     }
     
     @Test

@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.effect.Glow;
+import javafx.scene.text.Text;
+import view_controller.SnakeGUI;
 
 
 /**
@@ -21,6 +23,7 @@ public class SnakeGame {
     private ScoreManager scoreManager;
     private GraphicsContext gc;
     private boolean isGameOver;
+    private SnakeGUI snakeGUI;
     
     private AnimationTimer gameLoop;
     private long interval;
@@ -32,12 +35,13 @@ public class SnakeGame {
      * @param height An integer that represents the height of the game board
      * @param gc     A GraphicsContext used to draw the actors of the game
      */
-    public SnakeGame(int width, int height, long interval, int numPellets, GraphicsContext gc) {
+    public SnakeGame(int width, int height, long interval, int numPellets, GraphicsContext gc, SnakeGUI snakeGUI) {
         this.gc = gc;
         this.snake = new Snake(width / 2, height / 2, Color.GREEN);
         this.board = new Board(width, height, numPellets, Color.BLACK, gc, snake);
         this.scoreManager = new ScoreManager();
         this.interval = interval; // Nanoseconds (100ms)
+        this.snakeGUI = snakeGUI;
         
         setupGameLoop();
     }
@@ -127,23 +131,23 @@ public class SnakeGame {
     private void render() { //To Do: Sameeka
         if (!isGameOver) {
             board.update();
-            
-            String scoreText = "Score: " + scoreManager.getCurrentScore();
-            double padding = 10;
-            Font scoreFont = Font.font("Courier New", FontWeight.EXTRA_BOLD, 36);
-            gc.setFont(scoreFont);
-            
-            javafx.scene.text.Text text = new javafx.scene.text.Text(scoreText);
-            text.setFont(scoreFont);
-            double textWidth = text.getBoundsInLocal().getWidth();
-            double textY = padding + 36;
-            double textX = board.getWidth() - textWidth - padding;
-            
-            gc.setStroke(Color.WHITE);
-            gc.setLineWidth(2);
-            gc.strokeText(scoreText, textX, textY);
-            gc.setFill(Color.RED);
-            gc.fillText(scoreText, textX, textY);
+            snakeGUI.getGameDisplay().updateScore();
+//            String scoreText = "Score: " + scoreManager.getCurrentScore();
+//            double padding = 10;
+//            Font scoreFont = Font.font("Courier New", FontWeight.EXTRA_BOLD, 36);
+//            gc.setFont(scoreFont);
+//
+//            Text text = new Text(scoreText);
+//            text.setFont(scoreFont);
+//            double textWidth = text.getBoundsInLocal().getWidth();
+//            double textY = padding + 36;
+//            double textX = board.getWidth() - textWidth - padding;
+//
+//            gc.setStroke(Color.WHITE);
+//            gc.setLineWidth(2);
+//            gc.strokeText(scoreText, textX, textY);
+//            gc.setFill(Color.RED);
+//            gc.fillText(scoreText, textX, textY);
         } else {
             displayGameOverScreen();
         }
@@ -155,14 +159,16 @@ public class SnakeGame {
     public void displayGameOverScreen() {
         String gameOverText = "Game Over";
         String restartText = "Press 'R' to Restart";
+        String goToMainMenu = "Press ESCAPE to return to the main menu";
         
         CustomFont gameOverFont = new CustomFont(48);
         CustomFont restartFont = new CustomFont(24);
+        CustomFont mainMenuFont = new CustomFont(12);
         
         gc.setFill(Color.PURPLE);
         gc.setFont(gameOverFont.getCustomFont());
         
-        javafx.scene.text.Text text = new javafx.scene.text.Text(gameOverText);
+        Text text = new Text(gameOverText);
         text.setFont(gc.getFont());
         double textWidth = text.getBoundsInLocal().getWidth();
         double textHeight = text.getBoundsInLocal().getHeight();
@@ -175,12 +181,20 @@ public class SnakeGame {
         gc.setEffect(null);
         
         gc.setFont(restartFont.getCustomFont());
-        text = new javafx.scene.text.Text(restartText);
+        text = new Text(restartText);
         text.setFont(gc.getFont());
         textWidth = text.getBoundsInLocal().getWidth();
         y += 60;
         x = (board.getWidth() - textWidth) / 2;
         gc.fillText(restartText, x, y);
+        
+        gc.setFont(mainMenuFont.getCustomFont());
+        text = new Text(goToMainMenu);
+        text.setFont(gc.getFont());
+        textWidth = text.getBoundsInLocal().getWidth();
+        y += 40;
+        x = (board.getWidth() - textWidth) / 2;
+        gc.fillText(goToMainMenu, x, y);
     }
     
     /**
@@ -192,7 +206,9 @@ public class SnakeGame {
     public void handleKeyPress(KeyCode keyCode) {
         if (isGameOver) {
             if (keyCode == KeyCode.R) {
-                restartGame();
+                snakeGUI.startGame();
+            } else if (keyCode == KeyCode.ESCAPE) {
+                snakeGUI.setSceneRoot(snakeGUI.getMainMenu());
             }
         } else {
             switch (keyCode) {
@@ -210,6 +226,10 @@ public class SnakeGame {
                     break;
             }
         }
+    }
+    
+    public void setGraphicsContext(GraphicsContext gc) {
+        this.gc = gc;
     }
     
     /**
@@ -235,7 +255,7 @@ public class SnakeGame {
      *
      * @return A Board object that represents the NxN tile board of the game
      */
-    public Object getBoard() {
+    public Board getBoard() {
         return this.board;
     }
     
@@ -246,8 +266,7 @@ public class SnakeGame {
         isGameOver = false;
         
         // Restart the game loop
-        setupGameLoop();
-        start();
+        snakeGUI.startGame();
     }
     
     

@@ -121,11 +121,9 @@ public class Snake {
         
         // Set a 15-second window for the power up to be active
         if (isPoweredUp) {
-            System.out.println("Started");
             new Thread(() -> {
                 try {
                     Thread.sleep(15000);
-                    System.out.println("Ended");
                     isPoweredUp = false;
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();

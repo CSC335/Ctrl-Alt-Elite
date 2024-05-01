@@ -29,8 +29,6 @@ public class SnakeGUI extends Application {
 	private int WINDOW_HEIGHT = 600;
 	private int ROWS = WINDOW_HEIGHT / TILE_SIZE;
 	private int COLUMNS = WINDOW_WIDTH / TILE_SIZE;
-	
-	private Canvas canvas;
 
 	private SnakeGame snakeGame;
 	private Scene currentScene;
@@ -39,10 +37,15 @@ public class SnakeGUI extends Application {
 	private SettingsMenu settingsMenu;
 	private PauseMenu pauseMenu;
 	private MainMenu mainMenu;
+	private GameDisplay gameDisplay;
 	private Stage mainStage;
 
 	private SnakeAccountCollection accountCollection;
-
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
 	/**
 	 * Initialize the game and display it to a window
 	 *
@@ -76,18 +79,19 @@ public class SnakeGUI extends Application {
 	 */
 	public void startGame() {
 		mainStage.close();
-
+		
+		gameDisplay = new GameDisplay(this, WINDOW_WIDTH, WINDOW_HEIGHT + 10, snakeGame);
 		// Resize the stage and scene to show the full game
-		canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
 		snakeGame = new SnakeGame(WINDOW_WIDTH, WINDOW_HEIGHT, settingsMenu.getCurrentInterval(),
-				settingsMenu.getNumPellets(), gc);
+				settingsMenu.getNumPellets(), gameDisplay.getGraphicsContext(), this);
+		gameDisplay.setSnakeGame(snakeGame);
 		
 		// Create root node to hold the Canvas
-		StackPane root = new StackPane();
-		root.getChildren().add(canvas);
-		mainMenu.getScene().setRoot(new VBox()); // temporarily reset currentScene's root to free MainMenu
-		currentScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+		if (mainMenu.getScene() != null) {
+			mainMenu.getScene().setRoot(new VBox());
+		}
+		currentScene = new Scene(gameDisplay, WINDOW_WIDTH, WINDOW_HEIGHT + 10);
+		
 		currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
 		currentScene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent key) -> {
 			if (key.getCode() == KeyCode.ESCAPE) {
@@ -116,9 +120,7 @@ public class SnakeGUI extends Application {
 	 */
 	public void continueGame() {
 		// Create root node to hold the Canvas
-		StackPane root = new StackPane();
-		root.getChildren().add(canvas);
-		currentScene.setRoot(root);
+		currentScene.setRoot(gameDisplay);
 		currentScene.setOnKeyPressed(event -> snakeGame.handleKeyPress(event.getCode()));
 		
 		mainStage.setScene(currentScene);
@@ -214,5 +216,9 @@ public class SnakeGUI extends Application {
 
 	public PauseMenu getPauseMenu() {
 		return pauseMenu;
+	}
+	
+	public GameDisplay getGameDisplay() {
+		return gameDisplay;
 	}
 }
