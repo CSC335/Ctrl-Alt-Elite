@@ -1,7 +1,5 @@
 package view_controller;
 
-import java.util.List;
-
 /**
  * LoginPane snake class
  *

@@ -1,7 +1,6 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;

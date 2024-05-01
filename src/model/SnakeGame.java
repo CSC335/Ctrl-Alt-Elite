@@ -4,8 +4,6 @@ import javafx.scene.input.KeyCode;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.effect.Glow;
 import javafx.scene.text.Text;
 import view_controller.SnakeGUI;
@@ -71,16 +69,16 @@ public class SnakeGame {
         gameLoop.start();
     }
     
-	/**
-	 * Stop the game loop
-	 */
+    /**
+     * Stop the game loop
+     */
     public void stop() {
         gameLoop.stop();
     }
     
-	/**
-	 * Changes the game state to game over
-	 */
+    /**
+     * Changes the game state to game over
+     */
     public boolean gameOver() {
         isGameOver = true; // Set the game over flag
         stop();
@@ -88,9 +86,9 @@ public class SnakeGame {
         return true;
     }
     
-	/**
-	 * Updates to the current state of the game
-	 */
+    /**
+     * Updates to the current state of the game
+     */
     private void update() {
         if (!isGameOver) {
             if (board.isCollision()) {
